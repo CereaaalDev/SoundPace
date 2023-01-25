@@ -3,7 +3,8 @@ import * as Utils from "../util/HelperFunctions";
 
 const BASE_AUTH_URL = "https://accounts.spotify.com";
 const CLIENT_ID = "9e015ecfbd974c18a74316be13330671";
-const REDIRECT_URL = "http://localhost:5173/afterLogin";
+const REDIRECT_URL = "http://localhost:5173/logincallback";
+const SCOPE = 'user-library-read user-top-read'; //user-read-private
 
 const authAPI = axios.create({
   baseURL: BASE_AUTH_URL,
@@ -21,7 +22,7 @@ export const getLoginUrl = () => {
   const code_challenge = Utils.getEncodedVerifier(code_verifier);
 
   //create URL
-  const url = `${BASE_AUTH_URL}/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}&code_challenge_method=S256&code_challenge=${code_challenge}`;
+  const url = `${BASE_AUTH_URL}/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}&code_challenge_method=S256&code_challenge=${code_challenge}&scope=${SCOPE}`;
   return url;
 };
 
@@ -39,10 +40,12 @@ export const getAuthToken = async (code) => {
         code: code,
         redirect_uri: REDIRECT_URL,
         client_id: CLIENT_ID,
+        scope: SCOPE,
         code_verifier: code_verifier,
       },
     });
 
+    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
@@ -74,9 +77,9 @@ export const getAuthToken = async (code) => {
 
 export const refreshAuthToken = async () => {
     try{
-        const refresh_token = localStorage.getItem('refresh_token');
+        const refresh_token = window.localStorage.getItem('refresh_token');
         if(!refresh_token){
-            throw new Error('Es ist kein refresh_token mehr im Store --> neues Login nötig')
+            throw new Error('Kein Refresh-Token in Local Store --> neues Login nötig');
         }
 
         const response = await authAPI.post("/api/token", null, {
@@ -87,16 +90,12 @@ export const refreshAuthToken = async () => {
             }
         })
         
-        console.log(response);
         if(response.status === 200){
             localStorage.setItem("access_token", response.data.access_token);
             if(response.data.refresh_token){
                 localStorage.setItem("refresh_token", response.data.refresh_token);
             }
-        }else{
-            throw new Error('Response error');
         }
-
     }catch(error) {
         console.error(error);
         return Promise.reject();

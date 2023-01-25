@@ -1,32 +1,49 @@
-import { createSlice } from '@reduxjs/toolkit'
-import {  login } from './authActions'
+import { createSlice } from "@reduxjs/toolkit";
+import { login } from "./authActions";
 
 const initialState = {
-  loading: false,
+  loading: true,
   userInfo: {}, // for user object
-  userToken: null, // for storing the JWT
   error: null,
-  success: false, // for monitoring the registration process.
-}
+  loggedIn: false, // for monitoring the registration process.
+};
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
-  reducers: {},
-  extraReducers: {
-    [login.pending]: (state) => {
-        state.loading = true; 
-    },
-    [login.fulfilled]: (state, action) => {
-        state.success = true;
-        state.loading = false;
-        state.newSuccess = action.payload.success;
-    },
-    [login.rejected]: (state) => {
-        state.error = true;
-        state.loading = false; 
+  reducers: {
+    logout (state) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token')
+      state.loading = false;
+      state.userInfo = {}
+      state.error = null;
+      state.loggedIn = false;
     }
   },
-})
+  extraReducers: {
+    [login.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [login.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.error = null;
+      state.userInfo = {
+        name: payload.display_name,
+        id: payload.id,
+        imageURL: payload.images[0].url,
+        profileURL: payload.external_urls.spotify,
+      };
+      state.loggedIn = true;
+    },
+    [login.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+      state.loggedIn = false;
+    },
+  },
+});
 
-export default authSlice.reducer
+export const {logout} = authSlice.actions;
+export default authSlice.reducer;

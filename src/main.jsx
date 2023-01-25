@@ -5,11 +5,13 @@ import store from "./store";
 
 import App from "./App";
 import NotFound from "./features/Errors/NotFound";
-import AfterLogin from "./features/AfterLogin/AfterLogin";
+import AfterLogin from "./features/auth/Callback";
 import LoginError from "./features/Errors/LoginError";
-import Arrived from "./features/AfterLogin/Arrived";
+import Dashboard from "./features/Dashboard/index";
+import Home from "./features/Home";
 import { Provider } from "react-redux";
-
+import ProtectedRoute from "./util/ProtectedRoute";
+import Callback from "./features/auth/Callback";
 
 const router = createBrowserRouter([
   {
@@ -18,28 +20,25 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: "/child",
-        element: <Arrived />,
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/dashboard",
+        element: <ProtectedRoute element={<Dashboard />} />,
       },
     ],
   },
   {
-    path: "/afterLogin",
-    element: <AfterLogin />,
-    errorElement: <LoginError />
-  },
-  {
-    path: "/arrived",
-    element: <Arrived />,
-    errorElement: <LoginError />
+    path: "/logincallback",
+    element: <Callback />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
- // <React.StrictMode>
+  //<React.StrictMode>
   <Provider store={store}>
     <RouterProvider router={router} />
   </Provider>
-    
- // </React.StrictMode>
+  //</React.StrictMode>
 );
