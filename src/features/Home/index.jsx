@@ -1,11 +1,22 @@
-import Login from '../auth/Login'
+//import Login from '../auth/Login'
+
+import HeroSection from "./HeroSection";
+import { InfoCards } from "./InfoCards";
+import styled from "styled-components";
+import { Outlet } from "react-router-dom";
+import { Divider } from "../../components/divider";
+
+
+
 
 function Home() {
   return (
-    <div className="test">
-      <h1>Platz um Herosection zu kreieren</h1>
-      <Login />
-    </div>
+    <>
+      <HeroSection />
+        <Divider/>
+      <InfoCards  />
+      <Outlet/>
+    </>
   );
 }
 export default Home;

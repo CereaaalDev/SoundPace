@@ -2,13 +2,26 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 import { login } from "./authActions.js";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginUrl} from "../../api/auth";
+import { getLoginUrl } from "../../api/auth";
+
+import styled from "styled-components";
+
+const BackgroundContainer = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 9;
+`;
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, loading } = useSelector((state) => state.auth);
- 
+
   let popupWindow;
 
   const openLoginPopup = () => {
@@ -33,7 +46,7 @@ export default function Login() {
         popupWindow.close();
         //code aus URL and Login-Action weitergeben
         dispatch(login(message.data.payload.code));
-        navigate('/dashboard');
+        navigate("/dashboard");
         window.removeEventListener("message", handleWindowMessage);
       }
     } catch (error) {
@@ -45,25 +58,24 @@ export default function Login() {
     }
   };
 
-  if(loading){
+  if (loading) {
     return (
       <>
         <h1>Loading...</h1>
       </>
-    )
+    );
   }
 
   return (
     <>
-      <div className="app">
-        <h1>Welcome {userInfo ? userInfo.name : ''} to SoundPace</h1>
+      <BackgroundContainer>
+        <h1>Welcome {userInfo ? userInfo.name : ""} to SoundPace</h1>
         <p>Klicke auf den Link um dich einzuloggen</p>
         <button onClick={openLoginPopup}>Login</button>
-        <button onClick={() => navigate('/dashboard')}>Dashboard</button>
-      </div>
-      <div>
+        <button onClick={() => navigate("/dashboard")}>Dashboard</button>
+
         <Outlet />
-      </div>
+      </BackgroundContainer>
     </>
   );
 }
