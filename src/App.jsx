@@ -5,13 +5,14 @@ import { useEffect } from "react";
 import { logout } from "./features/auth/authSlice";
 import { Navbar } from "./components/navbar";
 import styled from "styled-components";
+import { Footer } from "./components/footer";
 
 const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  /* margin-left: 5vw;  
+   margin-right: 5vw; */
 `;
 
 export default function App() {
@@ -31,6 +32,7 @@ export default function App() {
       <AppContainer>
         <Navbar></Navbar>
         <Outlet />
+        <Footer/>
       </AppContainer>
     </>
   );

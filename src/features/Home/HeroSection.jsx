@@ -14,8 +14,10 @@ import { LoadingOverlay } from "../../components/loadingoverlay";
 const SectionContainer = styled.div`
   display: flex;
   max-width: 1500px;
-  padding-top: 5rem;
+  min-height: 50vh;
+  align-items: center;
   width: 100%;
+  padding-left: 5vw;
 `;
 
 const LeftContainer = styled.div`
@@ -94,7 +96,7 @@ function HeroSection() {
           Analysiere deine Musik und erstelle Playlists in genau deinem Tempo
         </h2>
         <CustomButton onClick={openLoginPopup}>
-          Entdecke deine Musik
+          Mit Spotify einloggen
         </CustomButton>
         <CustomButton type="secondary">Generelle Suche</CustomButton>
         <BackgroundImage src="src/assets/soundwaves.svg" alt="" />

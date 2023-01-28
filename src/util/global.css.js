@@ -6,6 +6,8 @@ body {
     background-color: #D9D9D9;
     color: black;
     font-family: 'Poppins', sans-serif;
+    overflow-x: none;
+    overflow-x: hidden;
 }
 
 `

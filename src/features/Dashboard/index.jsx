@@ -1,14 +1,20 @@
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-export default function Dashboard (){
-    const { userInfo } = useSelector(state => state.auth)
+const DashboardContainer = styled.div`
+  min-height: 90vh;
+`;
 
+export default function Dashboard() {
+  const { userInfo } = useSelector((state) => state.auth);
 
-    return (
-        <>
-            <h1>Profile Name: {userInfo.name}</h1>
-            <Link to={'/'}>Home</Link>
-        </>
-    )
+  return (
+    <>
+      <DashboardContainer>
+        <h1>Profile Name: {userInfo.name}</h1>
+        <Link to={"/"}>Home</Link>
+      </DashboardContainer>
+    </>
+  );
 }

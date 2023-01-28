@@ -13,7 +13,6 @@ function Home() {
   return (
     <>
       <HeroSection />
-        <Divider/>
       <InfoCards  />
       <Outlet/>
     </>
