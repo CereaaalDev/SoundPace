@@ -28,7 +28,7 @@ const NavLink = styled(Link)`
   :hover {
     color: ${COLORS.primary};
   }
-  &.active{
+  &.active {
     text-decoration: underline;
   }
 `;
@@ -43,7 +43,7 @@ const Hamburger = styled.div`
 
 const MobileMenuContainer = styled.div`
   position: absolute;
-  top: 60px;
+  top: 70px;
   width: 100vw;
   margin-left: -5vw;
   background-color: ${COLORS["bg-grey"]};
@@ -68,7 +68,7 @@ export function NavItems() {
       {loggedIn ? (
         <ListContainer>
           <li>
-            <NavLink to="/dashboard" >Dashboard</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
             <NavLink to="/pacecreator">PaceCreator</NavLink>
@@ -112,15 +112,15 @@ export function NavItems() {
                 </NavLink>
               </li>
               <li>
-              <CustomButton
-              type="secondary"
-              onClick={() => {
-                toggleMenu(false);
-                dispatch(logout());
-              }}
-            >
-              Logout
-            </CustomButton>
+                <CustomButton
+                  type="secondary"
+                  onClick={() => {
+                    toggleMenu(false);
+                    dispatch(logout());
+                  }}
+                >
+                  Logout
+                </CustomButton>
               </li>
             </MobileNavList>
           ) : (
