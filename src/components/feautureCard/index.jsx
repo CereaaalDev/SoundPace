@@ -18,7 +18,7 @@ export function FeautureCard (props){
     return (
             <CardContainer>
                 <Icon src={props.icon}/>
-                <h2>{props.title}</h2>
+                <h3>{props.title}</h3>
                 <Description>{props.description}</Description>
             </CardContainer>
     )

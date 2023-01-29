@@ -16,8 +16,9 @@ const SectionContainer = styled.div`
   max-width: 1500px;
   min-height: 50vh;
   align-items: center;
-  width: 100%;
-  padding-left: 5vw;
+  width: 90%;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
 `;
 
 const LeftContainer = styled.div`
@@ -30,6 +31,13 @@ const BackgroundImage = styled.img`
   right: 0px;
   top: 5vh;
   z-index: -1;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 3rem;
+  flex-wrap: wrap;
 `;
 
 function HeroSection() {
@@ -91,14 +99,18 @@ function HeroSection() {
   return (
     <SectionContainer>
       <LeftContainer>
-        <h1>Was ist deine Pace?</h1>
-        <h2>
-          Analysiere deine Musik und erstelle Playlists in genau deinem Tempo
-        </h2>
-        <CustomButton onClick={openLoginPopup}>
-          Mit Spotify einloggen
-        </CustomButton>
-        <CustomButton type="secondary">Generelle Suche</CustomButton>
+        <h1>Entdecke Musik genau in deiner Pace</h1>
+        <h6>
+          Erhalte neue Einblicke in deine Lieblingsmusik auf Spotify und
+          erstelle Playlist genau nach deinem Tempo. Oder suche einfach nach
+          neuen Tracks in der öffentlichen Suche.
+        </h6>
+        <ButtonGroup>
+          <CustomButton onClick={openLoginPopup}>
+            Mit Spotify einloggen
+          </CustomButton>
+          <CustomButton type="secondary">Generelle Suche</CustomButton>
+        </ButtonGroup>
         <BackgroundImage src="src/assets/soundwaves.svg" alt="" />
       </LeftContainer>
       {logininProgress ? <LoadingOverlay /> : ""}

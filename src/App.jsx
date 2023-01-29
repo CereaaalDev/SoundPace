@@ -28,12 +28,10 @@ export default function App() {
   }, []);
 
   return (
-    <>
       <AppContainer>
         <Navbar></Navbar>
         <Outlet />
         <Footer/>
       </AppContainer>
-    </>
   );
 }

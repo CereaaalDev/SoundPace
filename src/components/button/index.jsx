@@ -10,11 +10,11 @@ const Button = styled.button`
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.1s ease-in;
-  margin: 5px;
 
   :hover{
     border-color: ${COLORS["primary-light"]};
     background-color: ${COLORS["primary-light"]};
+    transform: translateY(-3px);
   }
 `;
 

@@ -44,14 +44,13 @@
    * `article` contexts in Chrome, Firefox, and Safari.
    */
   
-  h1 {
-    font-size: 2em;
+  /* h1 {
     margin: 0.67em 0;
   }
 
   h1,h2,h3,h4,p{
     margin: 1rem;
-  }
+  } */
   
   /* Grouping content
      ========================================================================== */

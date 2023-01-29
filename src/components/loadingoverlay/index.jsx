@@ -9,12 +9,13 @@ const BackgroundContainer = styled.div`
   top: 0;
   left: 0;
   cursor: pointer;
-  z-index: 9;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   transition: all 5s ease-in;
+  backdrop-filter: blur(10px);
 `;
 
 export function LoadingOverlay () {

@@ -21,7 +21,7 @@ export function Footer() {
       <Divider>
         <img src="src/assets/icons/tilt.svg" alt="" />
       </Divider>
-        <h5 style={{marginRight: '5vw'}} > © 2023 - Made with ❤️ by Cyrill Burren</h5>
+        <h6 style={{marginRight: '5vw', fontSize: '11px'}} > © 2023 - Made with ❤️ by Cyrill Burren</h6>
       </SectionContainer>
     </>
   );

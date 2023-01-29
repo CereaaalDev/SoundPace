@@ -18,7 +18,8 @@ const AvatarContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 15vh;
-  margin-bottom: 200px;
+  margin-bottom: 150px;
+  margin-top: 60px;
 `;
 
 const StatsCardsContainer = styled.div`

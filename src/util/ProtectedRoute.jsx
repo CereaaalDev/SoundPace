@@ -1,6 +1,14 @@
 import React from 'react'
 import {useSelector} from "react-redux"
 import {Navigate, Outlet} from "react-router-dom"
+import styled from 'styled-components';
+
+
+const LoadingContainer = styled.div`
+    width: 100vw;
+    height: 100vh;
+    margin: 0 auto;
+`
 
 
 const ProtectedRoute = ({element}) => {
@@ -8,7 +16,9 @@ const ProtectedRoute = ({element}) => {
     console.log('loading: ' + loading);
 
     if(loading) {
-        return <>Loading...</>
+        return <LoadingContainer>
+                <p>loading...</p>
+        </LoadingContainer>
     }
 
     console.log(<Outlet/>)

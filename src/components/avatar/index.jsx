@@ -7,22 +7,16 @@ const AvatarContainer = styled.div`
   border-radius: 50%;
   display: flex;
   justify-content: center;
-  
-img {
-  height: auto;
-  min-width: 100px;
-  min-height: 100px;
-}
-
-
+  background-image: url(${props => props.imgURL});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 3px solid white;
 `;
 
 
 export function Avatar(props){
     return(
-        <AvatarContainer>
-            <img src={props.imgSrc} ></img>
-        </AvatarContainer>
-
+        <AvatarContainer imgURL={props.imgSrc}/>
     )
 };
