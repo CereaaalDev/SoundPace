@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
 import { FONTSIZE } from "../../util/FontSizes";
-import { GiPartyFlags } from "react-icons/gi";
 
 const StatCardContainer = styled.div`
   background-color: ${COLORS["bg-white"]};
@@ -11,11 +10,12 @@ const StatCardContainer = styled.div`
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  /* min-width: 250px; */
   gap: 1rem;
   padding: 1rem 1.5rem;
-  @media (max-width: 768px) {
-    text-align: center;
+  transition: transform 0.5s ease-out;
+
+  :hover{
+    transform: scale(1.1);
   }
 `;
 const IconSection = styled.div`

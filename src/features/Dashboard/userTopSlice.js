@@ -27,7 +27,7 @@ const userTopSlice = createSlice({
       state.loading = false;
       state.error = null;
 
-      const tracksArray = payload.items;
+      const tracksArray = payload.tracks.items;
         const tracks = tracksArray.map((track) => {
          return {
             id: track.id,
@@ -36,7 +36,8 @@ const userTopSlice = createSlice({
             imageURL: track.album.images[0].url
           };
         });
-        state.topTracks = tracks
+        state.topTracks = tracks;
+        state.topArtists = payload.artists.items;
     },
     [getTracks.rejected]: (state, action) => {
       state.error = action.error.message;

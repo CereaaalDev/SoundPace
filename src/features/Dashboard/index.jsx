@@ -16,7 +16,6 @@ const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px;
 `;
 
 const AvatarContainer = styled.div`
@@ -25,12 +24,12 @@ const AvatarContainer = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 10vh;
-  margin-bottom: 150px;
+  margin-bottom: 100px;
   margin-top: 60px;
 `;
 
 const StatsCardsContainer = styled.div`
-  min-width: 100vw;
+  width: 100vw;
   background-color: ${COLORS["bg-white"]};
   position: relative;
 `;
@@ -47,28 +46,46 @@ const CardsContainer = styled.div`
   padding: 3rem;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
-
-  
 `;
 
 const ListSection = styled.section`
+  min-height: 35vh;
+  width: 100vw;
+  background-color: ${COLORS["bg-white"]};
+  display: flex;
+  justify-content: center;
+`;
+
+const ListGroup = styled.div`
+  max-width: min(90vw, 1500px);
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  min-height: 35vh;
-  min-width: 100vw;
-  background-color: ${COLORS["bg-white"]};
   justify-content: center;
-  gap: 10px;
+  gap: 5rem;
+  margin-bottom: 5rem;
 `;
 
 const ListContainer = styled.div`
-  min-height: 100px;
-  min-width: 600px;
+  flex: 1 0 auto;
+  max-width: 90vw;
+  h5{
+    color: ${COLORS.primary};
+    font-weight: 600;
+    padding-bottom: 2rem;
+  }
+`;
+
+const List = styled.div`
+  max-height: max(400px, 35vh);
+  overflow: scroll;
 `;
 
 export default function Dashboard() {
   const { userInfo } = useSelector((state) => state.auth);
-  const { topTracks, stats, loading } = useSelector((state) => state.userTop);
+  const { topTracks, topArtists, stats, loading } = useSelector(
+    (state) => state.userTop
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -94,7 +111,7 @@ export default function Dashboard() {
             />
             <Statcard
               icon="🏃‍♀"
-              title="Deine aktuelle Pace"
+              title="Deine aktuelle Ø Pace"
               value={stats.avgTempo}
               unit="BPM"
             />
@@ -107,37 +124,55 @@ export default function Dashboard() {
             <Statcard
               icon={<GiMustache />}
               title="Hipsterlevel"
-              value="61"
-              unit="%"
+              value={stats.hipsterIndex}
+              unit="/100"
             />
           </CardsContainer>
         </StatsCardsContainer>
         <ListSection>
-          <ListContainer>
-            <h5>Deine aktuellen Toptracks</h5>
-            {topTracks.map((track, index) => {
-              return (
-                <>
-                  <ListItem
-                    key={index}
-                    index={index + 1}
-                    imgSrc={track.imageURL}
-                    title={track.name}
-                    subtitle={track.artist.map((artist) => artist.name + ", ")}
-                  />
-                </>
-              );
-            })}
-          </ListContainer>
-          <ListContainer>
-            <h5>Deine aktuellen Topartists</h5>
-            <ListItem
-              index="1"
-              imgSrc="https://i.scdn.co/image/ab67616d0000b273c5c99315111b580f37efb689"
-              title="Song Titel kommt hier hin"
-              subtitle="Artist1 Artist2 Artist 3"
-            />
-          </ListContainer>
+          <ListGroup>
+            <ListContainer>
+              <h5>Deine aktuellen Lieblingshits</h5>
+              <List>
+                {!loading ? (topTracks.map((track, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      index={index + 1}
+                      imgSrc={track.imageURL}
+                      title={track.name}
+                      subtitle={track.artist.map(
+                        (artist) => artist.name + ", "
+                      )}
+                      value={track.analytics ? (Math.round(track.analytics.tempo)+" BPM"):"..."}
+                    />
+                  );
+                }))
+                : 'Loading...'
+                
+                }
+              </List>
+            </ListContainer>
+
+            <ListContainer>
+              <h5>Deine aktuellen Lieblingskünstler</h5>
+              <List>
+                {!loading ? (topArtists.map((artist, index) => {
+                  return (
+                    <ListItem
+                      key={index}
+                      index={index + 1}
+                      imgSrc={artist.images[0].url}
+                      title={artist.name}
+                      value={100-artist.popularity+"% HL"}
+                    />
+                  );
+                }))
+                : 'Loading...'
+                }
+              </List>
+            </ListContainer>
+          </ListGroup>
         </ListSection>
       </DashboardContainer>
     </>

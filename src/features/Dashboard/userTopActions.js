@@ -6,10 +6,11 @@ export const getTracks = createAsyncThunk(
   "userTop/getTracks",
   async (_, {rejectWithValue }) => {
     try {
-      const response = await contentAPI.get("/me/top/tracks");
-      if (response && response.data) {
-        console.log(response.data)
-        return response.data;
+      const responseTracks = await contentAPI.get("/me/top/tracks");
+      const responseArtists = await contentAPI.get("/me/top/artists");
+      if (responseTracks && responseTracks.data && responseArtists && responseArtists.data) {
+        console.log(responseArtists.data)
+        return {tracks: responseTracks.data, artists: responseArtists.data}
       }
 
     } catch (error) {
@@ -24,11 +25,7 @@ export const getTrackAnalytics = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const topTracks = getState().userTop.topTracks;
-
-     const fetchIDs = topTracks.map(track => track.id).join(',')
-
-      console.log(fetchIDs)
-
+      const fetchIDs = topTracks.map(track => track.id).join(',')
       const response = await contentAPI.get(`/audio-features?ids=${fetchIDs}`);
       if (response && response.data) {
         console.log(response.data)
@@ -41,6 +38,7 @@ export const getTrackAnalytics = createAsyncThunk(
     }
   }
 );
+
 
 export const calculateStats = createAsyncThunk(
   "userTop/calculateStats",
@@ -57,10 +55,15 @@ export const calculateStats = createAsyncThunk(
       const energy = analyticsData.map(track => track.energy);
       const avgEnergy = Math.round(UTILS.calculateAverage(energy)*100);
 
+      const topArtists = getState().userTop.topArtists
+      const hipsterIndex = 100-Math.round(UTILS.calculateAverage(topArtists.map(artist => artist.popularity)));
+      console.log(hipsterIndex)
+
       return {
         avgTempo: avgTempo,
         avgDanceability: avgDanceability,
-        avgEnergy: avgEnergy
+        avgEnergy: avgEnergy,
+        hipsterIndex: hipsterIndex
       }
 
     } catch (error) {

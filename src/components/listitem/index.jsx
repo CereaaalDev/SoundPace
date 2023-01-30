@@ -6,8 +6,7 @@ const ItemContainer = styled.div`
   align-items: center;
   max-width: 100%;
   gap: 1rem;
-  padding: 1rem 2rem;
-
+  padding: 0.5rem;
   &:hover {
     background-color: #ededed;
   }
@@ -16,20 +15,27 @@ const IndexContainer = styled.div`
   font-weight: 700;
   font-size: 25px;
   text-align: center;
-  min-width: 4rem;
+  min-width: 2rem;
+  color: ${COLORS["bg-dark-grey"]};
 `;
 
 const ImageContainer = styled.div`
   img {
-    width: 50px;
+    //TODO: Convert img size to inline-size tag
+    width:64px;
     height: auto;
-    margin: auto;
     display: block;
+  }
+
+  @media (max-width: 768px){
+    display: none;
   }
 `;
 
 const TitleContainer = styled.div`
-  flex: 1;
+  flex: 1 0 0;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const Subtitle = styled.h6`
@@ -46,7 +52,16 @@ const MainTitle = styled.h6`
   line-height: 19px;
   font-weight: 600;
   font-family: "Poppins", sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
+
+
+const ValueContainer = styled.div`
+  font-size: 14px;
+`
+
 
 export function ListItem(props) {
   return (
@@ -62,6 +77,9 @@ export function ListItem(props) {
         <Subtitle>{props.subtitle}</Subtitle>
         <MainTitle>{props.title}</MainTitle>
       </TitleContainer>
+      <ValueContainer>
+          <span>{props.value}</span>
+      </ValueContainer>
     </ItemContainer>
   );
 }
