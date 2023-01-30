@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const AvatarContainer = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   overflow: hidden;
   border-radius: 50%;
   display: flex;

@@ -21,10 +21,7 @@ body {
     background-color: #D9D9D9;
     color: black;
     font-family: 'Poppins', sans-serif;
-    overflow-x: none;
     overflow-x: hidden;
-
-
 }
 
 h1{
@@ -66,7 +63,6 @@ h6{
   font-size: var(--step-0);
   line-height: 28px;
   font-weight: 400;
-  margin-top: 1rem;
   margin-bottom: 1rem;
   font-family: 'Raleway', sans-serif;
 }

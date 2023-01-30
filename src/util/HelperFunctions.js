@@ -20,4 +20,8 @@ export function generateRandomString(length) {
    }
    return result;
 }
+
+export function calculateAverage (array) {
+  return array.reduce( ( p, c ) => p + c, 0 ) / array.length;
+}
  

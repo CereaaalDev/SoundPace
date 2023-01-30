@@ -43,7 +43,7 @@ contentAPI.interceptors.request.use(
   export const testRequest = async () => {
     try{
         //const response = await contentAPI.get("/audio-features/2czpGtNhPPVEh6hfedLpyT")
-        const response = await contentAPI.get("/me")
+        const response = await contentAPI.get("/audio-features/2FQRZLR31e3423Nmrgv0Pv")
         console.log(response);
     }catch(error){
         console.log('Der nächste ist von hier:')

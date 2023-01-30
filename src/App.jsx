@@ -11,6 +11,7 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   /* margin-left: 5vw;  
    margin-right: 5vw; */
 `;
