@@ -15,6 +15,7 @@ import Callback from "./features/auth/Callback";
 import GlobalCSS from "./util/global.css";
 import "./css_reset.css";
 import Login from "./features/auth/Login";
+import { PaceCreator } from "./features/PaceCreator";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <ProtectedRoute element={<Dashboard />} />,
       },
+      {
+        path: "/pacecreator",
+        element: <ProtectedRoute element={<PaceCreator />} />,
+      }
     ],
   },
   {

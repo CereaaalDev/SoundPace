@@ -4,15 +4,13 @@ import * as UTILS from "../../util/HelperFunctions";
 
 export const getTracks = createAsyncThunk(
   "userTop/getTracks",
-  async (_, {rejectWithValue }) => {
+  async (timeRange, {rejectWithValue }) => {
     try {
-      const responseTracks = await contentAPI.get("/me/top/tracks");
-      const responseArtists = await contentAPI.get("/me/top/artists");
+      const responseTracks = await contentAPI.get(`/me/top/tracks?time_range=${timeRange}`);
+      const responseArtists = await contentAPI.get(`/me/top/artists?time_range=${timeRange}`);
       if (responseTracks && responseTracks.data && responseArtists && responseArtists.data) {
-        console.log(responseArtists.data)
         return {tracks: responseTracks.data, artists: responseArtists.data}
       }
-
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -28,10 +26,8 @@ export const getTrackAnalytics = createAsyncThunk(
       const fetchIDs = topTracks.map(track => track.id).join(',')
       const response = await contentAPI.get(`/audio-features?ids=${fetchIDs}`);
       if (response && response.data) {
-        console.log(response.data)
         return response.data;
       }
-
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -57,7 +53,6 @@ export const calculateStats = createAsyncThunk(
 
       const topArtists = getState().userTop.topArtists
       const hipsterIndex = 100-Math.round(UTILS.calculateAverage(topArtists.map(artist => artist.popularity)));
-      console.log(hipsterIndex)
 
       return {
         avgTempo: avgTempo,

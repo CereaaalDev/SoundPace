@@ -8,9 +8,9 @@ import styled from "styled-components";
 import { Footer } from "./components/footer";
 
 const AppContainer = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; */
 
   /* margin-left: 5vw;  
    margin-right: 5vw; */

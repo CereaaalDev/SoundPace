@@ -11,7 +11,6 @@ const initialState = {
         avgEnergy: '--'
       },
   error: null,
-  loggedIn: false, // for monitoring the registration process.
 };
 
 const userTopSlice = createSlice({

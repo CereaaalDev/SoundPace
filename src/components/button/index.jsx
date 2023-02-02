@@ -14,7 +14,8 @@ const Button = styled.button`
   :hover{
     border-color: ${COLORS["primary-light"]};
     background-color: ${COLORS["primary-light"]};
-    transform: translateY(-3px);
+    transform: translateY(-1px);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   }
 `;
 
@@ -25,7 +26,8 @@ const SecondaryButton = styled(Button)`
   backdrop-filter: blur(10px);
 
   :hover{
-    background-color: ${COLORS["secondary-light"]};
+    /* background-color: ${COLORS["secondary-light"]}; */
+    background-color: transparent;
   }
 
 

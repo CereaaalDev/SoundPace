@@ -11,6 +11,8 @@ import { useEffect } from "react";
 import { getTracks, getTrackAnalytics, calculateStats } from "./userTopActions";
 import { CustomButton } from "../../components/button";
 import { testRequest } from "../../api/content";
+import { Spinner } from "../../components/spinner";
+import { useState } from "react";
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -67,9 +69,9 @@ const ListGroup = styled.div`
 `;
 
 const ListContainer = styled.div`
-  flex: 1 0 auto;
+  flex: 1;
   max-width: 90vw;
-  h5{
+  h5 {
     color: ${COLORS.primary};
     font-weight: 600;
     padding-bottom: 2rem;
@@ -81,18 +83,26 @@ const List = styled.div`
   overflow: scroll;
 `;
 
+const SelectorGroup = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+`;
+
 export default function Dashboard() {
   const { userInfo } = useSelector((state) => state.auth);
   const { topTracks, topArtists, stats, loading } = useSelector(
     (state) => state.userTop
   );
+  const [timeSpan, setTimeSpan] = useState("short_term");
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getTracks())
+    dispatch(getTracks(timeSpan))
       .then(() => dispatch(getTrackAnalytics()))
       .then(() => dispatch(calculateStats()));
-  }, []);
+  }, [timeSpan]);
 
   return (
     <>
@@ -106,70 +116,106 @@ export default function Dashboard() {
             <Statcard
               icon="🕺🏻"
               title="Tanzbarkeit"
-              value={loading ? "??" : stats.avgDanceability}
-              unit="%"
+              value={loading ? <Spinner /> : stats.avgDanceability}
+              unit={loading ? "" : "%"}
             />
             <Statcard
               icon="🏃‍♀"
               title="Deine aktuelle Ø Pace"
-              value={stats.avgTempo}
-              unit="BPM"
+              value={loading ? <Spinner /> : stats.avgTempo}
+              unit={loading ? "" : "BPM"}
             />
             <Statcard
               icon="⚡"
               title="Trackenergie"
-              value={stats.avgEnergy}
-              unit="/100"
+              value={loading ? <Spinner /> : stats.avgEnergy}
+              unit={loading ? "" : "/100"}
             />
             <Statcard
               icon={<GiMustache />}
               title="Hipsterlevel"
-              value={stats.hipsterIndex}
-              unit="/100"
+              value={loading ? <Spinner /> : stats.hipsterIndex}
+              unit={loading ? "" : "/100"}
             />
           </CardsContainer>
+          <SelectorGroup>
+            <label>
+              <input
+                type="radio"
+                name="timespan"
+                checked={timeSpan === 'short_term'}
+                onChange={() => setTimeSpan("short_term")}
+              />
+              Letzte 4 Wochen
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="timespan"
+                checked={timeSpan === 'medium_term'}
+                onChange={() => setTimeSpan("medium_term")}
+              />
+              Letzte 6 Monate
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="timespan"
+                checked={timeSpan === 'long_term'}
+                onChange={() => setTimeSpan("long_term")}
+              />
+              Seit beginn
+            </label>
+          </SelectorGroup>
         </StatsCardsContainer>
         <ListSection>
           <ListGroup>
             <ListContainer>
               <h5>Deine aktuellen Lieblingshits</h5>
               <List>
-                {!loading ? (topTracks.map((track, index) => {
-                  return (
-                    <ListItem
-                      key={index}
-                      index={index + 1}
-                      imgSrc={track.imageURL}
-                      title={track.name}
-                      subtitle={track.artist.map(
-                        (artist) => artist.name + ", "
-                      )}
-                      value={track.analytics ? (Math.round(track.analytics.tempo)+" BPM"):"..."}
-                    />
-                  );
-                }))
-                : 'Loading...'
-                
-                }
+                {!loading ? (
+                  topTracks.map((track, index) => {
+                    return (
+                      <ListItem
+                        key={index}
+                        index={index + 1}
+                        imgSrc={track.imageURL}
+                        title={track.name}
+                        subtitle={track.artist.map(
+                          (artist) => artist.name + ", "
+                        )}
+                        value={
+                          track.analytics
+                            ? Math.round(track.analytics.tempo) + " BPM"
+                            : "..."
+                        }
+                      />
+                    );
+                  })
+                ) : (
+                  <Spinner />
+                )}
               </List>
             </ListContainer>
 
             <ListContainer>
               <h5>Deine aktuellen Lieblingskünstler</h5>
               <List>
-                {!loading ? (topArtists.map((artist, index) => {
-                  return (
-                    <ListItem
-                      key={index}
-                      index={index + 1}
-                      imgSrc={artist.images[0].url}
-                      title={artist.name}
-                      value={100-artist.popularity+"% HL"}
-                    />
-                  );
-                }))
-                : 'Loading...'
-                }
+                {!loading ? (
+                  topArtists.map((artist, index) => {
+                    return (
+                      <ListItem
+                        key={index}
+                        index={index + 1}
+                        imgSrc={artist.images[0].url}
+                        title={artist.name}
+                        value={100 - artist.popularity + "% HL"}
+                      />
+                    );
+                  })
+                ) : (
+                  <Spinner />
+                )}
               </List>
             </ListContainer>
           </ListGroup>

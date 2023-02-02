@@ -4,7 +4,7 @@ import * as Utils from "../util/HelperFunctions";
 const BASE_AUTH_URL = "https://accounts.spotify.com";
 const CLIENT_ID = "9e015ecfbd974c18a74316be13330671";
 const REDIRECT_URL = "http://localhost:5173/logincallback";
-const SCOPE = 'user-library-read user-top-read'; //user-read-private
+const SCOPE = 'user-library-read user-top-read playlist-read-private'; //user-read-private
 
 const authAPI = axios.create({
   baseURL: BASE_AUTH_URL,

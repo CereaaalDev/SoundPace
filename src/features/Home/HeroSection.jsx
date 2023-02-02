@@ -13,12 +13,11 @@ import { LoadingOverlay } from "../../components/loadingoverlay";
 
 const SectionContainer = styled.div`
   display: flex;
-  max-width: 1500px;
+  max-width: min(90vw, 1500px);
   min-height: 50vh;
+  /* justify-content: center; */
   align-items: center;
-  width: 90%;
-  margin-bottom: 3rem;
-  margin-top: 3rem;
+  margin: 3rem auto;
 `;
 
 const LeftContainer = styled.div`

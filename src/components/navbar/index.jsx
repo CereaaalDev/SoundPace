@@ -10,12 +10,12 @@ const NavbarContainer = styled.nav`
     min-height: 70px;
     width: 90vw;
     max-width: 1500px;
-    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 999;
     background-color: ${COLORS["bg-grey"]};
+    margin: 0 auto;
 `
 
 export function Navbar(){

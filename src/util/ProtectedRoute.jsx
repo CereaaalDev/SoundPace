@@ -2,26 +2,28 @@ import React from 'react'
 import {useSelector} from "react-redux"
 import {Navigate, Outlet} from "react-router-dom"
 import styled from 'styled-components';
+import { Spinner } from '../components/spinner';
 
 
 const LoadingContainer = styled.div`
     width: 100vw;
     height: 100vh;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 
 const ProtectedRoute = ({element}) => {
     const { loggedIn, loading } = useSelector((state) => state.auth);
-    console.log('loading: ' + loading);
 
     if(loading) {
         return <LoadingContainer>
-                <p>loading...</p>
+                <Spinner/>
         </LoadingContainer>
     }
 
-    console.log(<Outlet/>)
+
  return (loggedIn ? element : <Navigate to={'/'} />)
 
 };
