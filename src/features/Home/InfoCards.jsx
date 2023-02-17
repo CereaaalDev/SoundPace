@@ -23,6 +23,9 @@ const InfoCardsContainer = styled.div`
 const Divider = styled.div`
   min-width: 100vw;
   transform: rotate(180deg);
+  img{
+    width: 100%;
+  }
 `;
 
 export function InfoCards() {

@@ -12,6 +12,9 @@ const SectionContainer = styled.div`
 const Divider = styled.div`
   transform: rotate(180deg);
   transform: scaleX(-1);
+  img{
+    width: 100%;
+  }
 `;
 
 export function Footer() {
@@ -21,7 +24,7 @@ export function Footer() {
       <Divider>
         <img src="src/assets/icons/tilt.svg" alt="" />
       </Divider>
-        <h6 style={{marginRight: '5vw', fontSize: '11px'}} > © 2023 - Made with ❤️ by Cyrill Burren</h6>
+        <h6 style={{marginRight: '5vw', marginBottom: 0, paddingBottom: '0.5rem', fontSize: '11px'}} > © 2023 - Made with ❤️ by Cyrill Burren</h6>
       </SectionContainer>
     </>
   );
