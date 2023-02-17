@@ -6,6 +6,8 @@ import { getPlaylists } from "./paceCreatorActions";
 import { selectPlaylist } from "./paceCreatorSlice";
 import { Spinner } from "../../components/spinner";
 import { useEffect, useState } from "react";
+import { PlaylistChoice } from "./PlaylistChoice";
+import { Settings } from "./Settings";
 
 const HeaderSection = styled.section`
   width: 100vw;
@@ -42,22 +44,8 @@ const PlaylistCardContainer = styled.div`
 `;
 
 export function PaceCreator() {
-  const { loading, userPlaylists } = useSelector((state) => state.paceCreator);
-  const [totalSelected, setTotalSelected] = useState(0);
 
-  const dispatch = useDispatch();
-
-  useEffect(()=>{
-    dispatch(getPlaylists());
-  }, [])
-
-  useEffect(() => {
-    setTotalSelected(
-      userPlaylists
-        .filter((playlist) => playlist.selected)
-        .reduce((tot, cur) => tot + cur.tracks.total, 0)
-    );
-  }, [userPlaylists]);
+  const [step, setStep] = useState(2);
 
   return (
     <>
@@ -69,25 +57,15 @@ export function PaceCreator() {
       </HeaderSection>
       <ContentSsection>
         <ContentContainer>
-          <h2>{totalSelected} Tracks ausgewählt</h2>
-          <PlaylistCardContainer>
-            {userPlaylists && !loading ? (
-              userPlaylists.map((playlist) => {
-                return (
-                  <PlaylistCard
-                    key={playlist.id}
-                    title={playlist.name}
-                    trackcount={playlist.tracks.total}
-                    imgSrc={playlist.images[0] ? playlist.images[0].url : ""}
-                    selected={playlist.selected}
-                    onClick={() => dispatch(selectPlaylist(playlist.id))}
-                  />
-                );
-              })
-            ) : (
-              <Spinner />
-            )}
-          </PlaylistCardContainer>
+
+        {step === 1 ? 
+          <PlaylistChoice/> : null
+        }
+
+        {step === 2 ? 
+          <Settings/> : null
+        }
+         
         </ContentContainer>
       </ContentSsection>
     </>
