@@ -21,7 +21,10 @@ export function PlaylistChoice() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPlaylists());
+    //nur Laden falls noch keine Daten geladen wurden
+    if(userPlaylists.length === 0){
+        dispatch(getPlaylists());
+    }
   }, []);
 
   useEffect(() => {

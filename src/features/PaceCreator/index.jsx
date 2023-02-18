@@ -1,11 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
-import { CustomButton } from "../../components/button";
-import { PlaylistCard } from "../../components/playlistcard";
-import { getPlaylists } from "./paceCreatorActions";
-import { selectPlaylist } from "./paceCreatorSlice";
-import { Spinner } from "../../components/spinner";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlaylistChoice } from "./PlaylistChoice";
 import { Settings } from "./Settings";
 
@@ -45,7 +40,7 @@ const PlaylistCardContainer = styled.div`
 
 export function PaceCreator() {
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState('1');
 
   return (
     <>
@@ -53,16 +48,17 @@ export function PaceCreator() {
         <HeaderContainer>
           <h1>Erstelle deine Pacelist</h1>
           <h6>Hier kommt dann der Stepper</h6>
+          <input onChange={(e)=>setStep(e.target.value)}/>
         </HeaderContainer>
       </HeaderSection>
       <ContentSsection>
         <ContentContainer>
 
-        {step === 1 ? 
+        {step === '1' ? 
           <PlaylistChoice/> : null
         }
 
-        {step === 2 ? 
+        {step === '2' ? 
           <Settings/> : null
         }
          
