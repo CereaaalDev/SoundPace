@@ -12,9 +12,6 @@ export const getPlaylists = createAsyncThunk(
       } else {
         responsePlaylist = await contentAPI.get(url);
       }
-
-      console.log(responsePlaylist.data);
-
       if (responsePlaylist.data.next) {
         dispatch(getPlaylists(responsePlaylist.data.next));
       }
@@ -27,27 +24,27 @@ export const getPlaylists = createAsyncThunk(
   }
 );
 
-export const getPLTrackIDs = createAsyncThunk(
-  "paceCreator/getPLTrackIDs",
-  async (url, { dispatch, rejectWithValue }) => {
+export const getTracksOfSelectedPlaylists = createAsyncThunk(
+  "paceCreator/getTracksOfSelectedPlaylists",
+  async (id, { getState, rejectWithValue }) => {
     try {
-      let responsePlaylist = "";
+      let selectedPlaylists = getState().paceCreator.userPlaylists.filter(
+        (playlist) => playlist.selected
+      );
+      let response = null;
+      let result = [];
 
-      if (!url) {
-        responsePlaylist = await contentAPI.get(
-          `/playlists/37i9dQZF1F0sijgNaJdgit/tracks?limit=50`
-        );
-      } else {
-        responsePlaylist = await contentAPI.get(url);
+      for (const playlist of selectedPlaylists) {
+        response = await contentAPI.get(`/playlists/${playlist.id}/tracks`);
+        result = result.concat(response.data.items);
+
+        // Iterative API Abfrage um alle Elemente abzufragen
+        while (response.data.next) {
+          response = await contentAPI.get(response.data.next);
+          result = result.concat(response.data.items);
+        }
       }
-
-      console.log(responsePlaylist.data);
-
-      if (responsePlaylist.data.next) {
-        dispatch(getPLTrackIDs(responsePlaylist.data.next));
-      }
-
-      return responsePlaylist.data;
+      return result;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -55,33 +52,24 @@ export const getPLTrackIDs = createAsyncThunk(
   }
 );
 
-export const getTrackAnalytics = createAsyncThunk(
-  "paceCreator/getTrackAnalytics",
-  async (ids, { dispatch, rejectWithValue }) => {
+export const getAnalyticsOfSelectedTracks = createAsyncThunk(
+  "paceCreator/getAnalyticsOfSelectedTracks",
+  async (id, { getState, rejectWithValue }) => {
     try {
-      let responsePlaylist = await contentAPI.get(`/audio-features?ids=${ids}`);
+      let trackIds = getState().paceCreator.selectedTracks.map(
+        (track) => track.track.id
+      );
 
-      console.log(responsePlaylist.data);
+      let response = null;
+      let result = [];
 
-      return responsePlaylist.data;
-    } catch (error) {
-      console.log(error);
-      return rejectWithValue(error.data);
-    }
-  }
-);
-
-export const playlistBatch = createAsyncThunk(
-  "paceCreator/playlistBatch",
-  async (ids, { getState, dispatch, rejectWithValue }) => {
-    try {
-      let selectedPlaylists = getState().paceCreator.userPlaylists.filter(playlist => playlist.selected);
-      selectedPlaylists.forEach((playlist)=> {
-        dispatch(getPLTrackIDs(playlist.tracks.href));
-    });
-
-
-
+      //100 TrackIds aus Array zu einem einzelnen String für Request vorbereiten
+      while (trackIds.length > 0) {
+        const chunk = trackIds.splice(0, 100).join();
+        response = await contentAPI.get(`/audio-features?ids=${chunk}`);
+        result = result.concat(response.data.audio_features);
+      }
+      return result;
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
