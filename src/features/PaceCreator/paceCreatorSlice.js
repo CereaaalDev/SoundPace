@@ -9,7 +9,6 @@ const initialState = {
   loading: true,
   userPlaylists: [], // Playlist des Users
   userLibrary: [], // Library des Users
-  selectedPlaylists: [],
   selectedTracks: [],
   error: null,
 };
@@ -19,7 +18,6 @@ const paceCreatorSlice = createSlice({
   initialState,
   reducers: {
     selectPlaylist(state, { payload }) {
-      state.selectedPlaylists.push(payload);
       let index = state.userPlaylists.findIndex((pl) => pl.id === payload);
       state.userPlaylists[index].selected =
         !state.userPlaylists[index].selected;
@@ -40,7 +38,6 @@ const paceCreatorSlice = createSlice({
     [getPlaylists.rejected]: (state, action) => {
       state.error = action.error.message;
       state.loading = false;
-      state.loggedIn = false;
     },
     [getTracksOfSelectedPlaylists.pending]: (state) => {
       state.loading = true;
@@ -54,7 +51,6 @@ const paceCreatorSlice = createSlice({
     [getTracksOfSelectedPlaylists.rejected]: (state, action) => {
       state.error = action.error.message;
       state.loading = false;
-      state.loggedIn = false;
     },
     [getAnalyticsOfSelectedTracks.pending]: (state) => {
       state.loading = true;

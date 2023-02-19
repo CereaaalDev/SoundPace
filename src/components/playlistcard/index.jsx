@@ -18,6 +18,11 @@ const CardContainer = styled.div`
     margin-bottom: 0;
   }
 
+  img{
+    max-width: 80%;
+    object-fit: contain;
+  }
+
   :hover {
     transform: scale(1.05);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
@@ -51,7 +56,6 @@ export function PlaylistCard(props) {
     <CardContainer selected={props.selected} onClick={props.onClick}>
       <img
         src={props.imgSrc}
-        width="80%"
       />
       <Title>{props.title}</Title>
       <Tracks>{props.trackcount} {props.trackcount == 1 ? "Track":"Tracks"} </Tracks>

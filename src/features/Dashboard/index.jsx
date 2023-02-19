@@ -182,8 +182,8 @@ export default function Dashboard() {
                         imgSrc={track.imageURL}
                         title={track.name}
                         subtitle={track.artist.map(
-                          (artist) => artist.name + ", "
-                        )}
+                          (artist) => artist.name).join(', ')
+                        }
                         value={
                           track.analytics
                             ? Math.round(track.analytics.tempo) + " BPM"
