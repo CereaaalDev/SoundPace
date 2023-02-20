@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { contentAPI } from "../../api/content";
 import axios from "axios";
-
 import { B64_COVER } from "../../assets/cover_b64_plain.js";
 import { imageAPI } from "../../api/image";
+
 
 export const getPlaylists = createAsyncThunk(
   "paceCreator/getPlaylists",
@@ -83,7 +83,7 @@ export const getAnalyticsOfSelectedTracks = createAsyncThunk(
 
 export const createPlaylist = createAsyncThunk(
   "paceCreator/createPlaylist",
-  async (playlistName, { getState, rejectWithValue }) => {
+  async (playlistName, { getState, dispatch, rejectWithValue }) => {
     try {
       const user_id = getState().auth.userInfo.id;
       const createRequest = await contentAPI.post(
@@ -101,16 +101,10 @@ export const createPlaylist = createAsyncThunk(
       );
 
       if (!createRequest.data.id) {
+        console.log("keine Playlist ID erhalten");
         return;
       }
 
-      const imageRequest = await imageAPI.put(
-        `playlists/${createRequest.data.id}/images`,
-        B64_COVER,
-        null
-      );
-
-      console.log(imageRequest.data);
       while (trackURIs.length > 0) {
         const chunk = trackURIs.splice(0, 100);
         const addRequest = await contentAPI.post(
@@ -120,6 +114,23 @@ export const createPlaylist = createAsyncThunk(
           }
         );
       }
+
+      dispatch(changePlaylistCover(createRequest.data.id));
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.data);
+    }
+  }
+);
+
+export const changePlaylistCover = createAsyncThunk(
+  "paceCreator/changePlaylistCover",
+  async (id, { rejectWithValue }) => {
+    try {
+      //Timeout damit Playlist wirklich angelegt ist bei Spotify
+      const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds))
+      await sleep(3000);
+      await imageAPI.put(`/playlists/${id}/images`,B64_COVER);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);

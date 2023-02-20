@@ -40,18 +40,6 @@ contentAPI.interceptors.request.use(
     return Promise.reject(error);
   });
 
-  export const testRequest = async () => {
-    try{
-        //const response = await contentAPI.get("/audio-features/2czpGtNhPPVEh6hfedLpyT")
-        const response = await contentAPI.get("/audio-features/2FQRZLR31e3423Nmrgv0Pv")
-        console.log(response);
-    }catch(error){
-        console.log('Der nächste ist von hier:')
-        console.error(error);
-        return Promise.reject('no promise');
-    }
-  }
-
 
 
 

@@ -14,7 +14,7 @@ import { COLORS } from "../../util/Colors";
 import styled from "styled-components";
 import { ListItem } from "../../components/listitem";
 import { CustomButton } from "../../components/button";
-import { addFilteredTracks, nextStep, previousStep } from "./paceCreatorSlice";
+import { addFilteredTracks, nextStep, previousStep, resetSuccess } from "./paceCreatorSlice";
 
 const FilterContainer = styled.div`
   display: flex;
@@ -115,9 +115,11 @@ export function Settings() {
 
   useEffect(() => {
     //Initiales Laden der Tracks aus den ausgewählten Playlist und danach die zugehörigen Analytics
-    dispatch(getTracksOfSelectedPlaylists()).then(() =>
+      dispatch(getTracksOfSelectedPlaylists()).then(() =>
       dispatch(getAnalyticsOfSelectedTracks())
-    );
+      );
+      dispatch(resetSuccess())
+    
   }, []);
 
   useEffect(() => {

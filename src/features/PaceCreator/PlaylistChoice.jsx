@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { PlaylistCard } from "../../components/playlistcard";
 import { getPlaylists } from "./paceCreatorActions";
-import { nextStep, previousStep, selectPlaylist } from "./paceCreatorSlice";
+import { nextStep, previousStep, resetSuccess, selectPlaylist } from "./paceCreatorSlice";
 import { Spinner } from "../../components/spinner";
 import { useEffect, useState } from "react";
 import { CustomButton } from "../../components/button";

@@ -24,7 +24,6 @@ const Button = styled.button`
     border-color: gray;
     cursor: auto;
   }
-
 `;
 
 const SecondaryButton = styled(Button)`
@@ -37,7 +36,6 @@ const SecondaryButton = styled(Button)`
     /* background-color: ${COLORS["secondary-light"]}; */
     background-color: transparent;
   }
-
 
 `;
 

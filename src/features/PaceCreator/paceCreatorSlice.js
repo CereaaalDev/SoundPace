@@ -12,6 +12,7 @@ const initialState = {
   userLibrary: [], // Library des Users
   selectedTracks: [],
   filteredTracks: [],
+  createPlaylistSuccessfull: null,
   currentStep: 1,
   error: null,
 };
@@ -33,6 +34,15 @@ const paceCreatorSlice = createSlice({
     },
     addFilteredTracks(state, {payload}){
       state.filteredTracks = payload;
+    },
+    restart(state){
+      state.selectedTracks = [];
+      state.filteredTracks = [];
+      state.userPlaylists = [];
+      state.currentStep = 1;
+    },
+    resetSuccess(state) {
+      state.createPlaylistSuccessfull = null;
     }
   },
   extraReducers: {
@@ -94,6 +104,7 @@ const paceCreatorSlice = createSlice({
     [createPlaylist.fulfilled]: (state, { payload }) => {
       state.error = null;
       state.loading = false;
+      state.createPlaylistSuccessfull = true;
     },
     [createPlaylist.rejected]: (state, action) => {
       state.error = action.error.message;
@@ -102,5 +113,5 @@ const paceCreatorSlice = createSlice({
   },
 });
 
-export const { selectPlaylist, nextStep, previousStep, addFilteredTracks } = paceCreatorSlice.actions;
+export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess } = paceCreatorSlice.actions;
 export default paceCreatorSlice.reducer;

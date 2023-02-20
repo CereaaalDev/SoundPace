@@ -29,25 +29,25 @@ const HeaderContainer = styled.div`
 const ContentContainer = styled.div`
   max-width: min(1500px, 90vw);
   margin: 0 auto;
-
 `;
 
 export function PaceCreator() {
-  const { currentStep } = useSelector((state) => state.paceCreator)
+  const { currentStep } = useSelector((state) => state.paceCreator);
 
   return (
     <>
       <HeaderSection>
         <HeaderContainer>
-          <h1>Wähle deine Quelle</h1>
+          {currentStep === 1 ? <h1>Wähle deine Quelle</h1> : null}
+          {currentStep === 2 ? <h1>Konfiguriere deine Pace</h1> : null}
+          {currentStep === 3 ? <h1>Erstelle deine Playlist</h1> : null}
         </HeaderContainer>
       </HeaderSection>
       <ContentSection>
         <ContentContainer>
-
           {currentStep === 1 ? <PlaylistChoice /> : null}
           {currentStep === 2 ? <Settings /> : null}
-          {currentStep === 3 ? <CreatePlaylist/> : null}
+          {currentStep === 3 ? <CreatePlaylist /> : null}
         </ContentContainer>
       </ContentSection>
     </>

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CustomButton } from "../../components/button";
-import { previousStep } from "./paceCreatorSlice";
+import { previousStep, restart } from "./paceCreatorSlice";
 import { ListItem } from "../../components/listitem";
 import { COLORS } from "../../util/Colors";
 import { createPlaylist } from "./paceCreatorActions";
@@ -73,7 +73,9 @@ const PlaylistCover = styled.div`
 `;
 
 export function CreatePlaylist() {
-  const { filteredTracks, loading} = useSelector((state) => state.paceCreator);
+  const { filteredTracks, loading, createPlaylistSuccessfull } = useSelector(
+    (state) => state.paceCreator
+  );
   const totalDuration = filteredTracks.reduce(
     (acc, track) => acc + track.track.duration_ms,
     0
@@ -91,15 +93,19 @@ export function CreatePlaylist() {
       </InstructionContainer>
 
       <SettingsContainer>
-        <InputItem>
-          <label>Namen deiner Playlist</label>
-          <input
-            type="text"
-            placeholder="Gib einen Namen ein"
-            value={playlistName}
-            onChange={(e) => setPlaylistName(e.target.value)}
-          />
-        </InputItem>
+        {createPlaylistSuccessfull ? (
+          <h4>✅ Playlist wurde erfolgreich erstellt</h4>
+        ) : (
+          <InputItem>
+            <label>Namen deiner Playlist</label>
+            <input
+              type="text"
+              placeholder="Gib einen Namen ein"
+              value={playlistName}
+              onChange={(e) => setPlaylistName(e.target.value)}
+            />
+          </InputItem>
+        )}
         <PlaylistCover>
           <img src="src/assets/SoundPaceCover.jpg" />
           <h6>{playlistName}</h6>
@@ -109,6 +115,7 @@ export function CreatePlaylist() {
           </p>
         </PlaylistCover>
       </SettingsContainer>
+
       <ButtonContainer>
         <CustomButton
           type="secondary"
@@ -118,15 +125,20 @@ export function CreatePlaylist() {
           Zurück
         </CustomButton>
 
-        {loading ? <Spinner/> :
-        <CustomButton
-          disabled={playlistName.length === 0 || loading}
-          onClick={() => {
-            dispatch(createPlaylist(playlistName));
-          }}
-        >
-          Playlist erstellen
-        </CustomButton>}
+        {loading ? (
+          <Spinner />
+        ) : createPlaylistSuccessfull ? (
+          <CustomButton onClick={() => dispatch(restart())}>
+            Neu beginnen
+          </CustomButton>
+        ) : (
+          <CustomButton
+            disabled={playlistName.length === 0}
+            onClick={() => dispatch(createPlaylist(playlistName))}
+          >
+            Playlist erstellen
+          </CustomButton>
+        )}
       </ButtonContainer>
 
       <ListContainer>

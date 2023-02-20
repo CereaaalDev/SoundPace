@@ -10,7 +10,6 @@ import { useEffect } from "react";
 
 import { getTracks, getTrackAnalytics, calculateStats } from "./userTopActions";
 import { CustomButton } from "../../components/button";
-import { testRequest } from "../../api/content";
 import { Spinner } from "../../components/spinner";
 import { useState } from "react";
 
