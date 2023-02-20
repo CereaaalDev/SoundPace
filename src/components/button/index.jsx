@@ -11,12 +11,20 @@ const Button = styled.button`
   cursor: pointer;
   transition: all 0.1s ease-in;
 
-  :hover{
+  :hover:enabled{
     border-color: ${COLORS["primary-light"]};
     background-color: ${COLORS["primary-light"]};
     transform: translateY(-1px);
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   }
+
+  :disabled {
+    background-color: #d7d6d6;
+    color: gray;
+    border-color: gray;
+    cursor: auto;
+  }
+
 `;
 
 const SecondaryButton = styled(Button)`
@@ -25,7 +33,7 @@ const SecondaryButton = styled(Button)`
   border: 2px solid ${COLORS.primary};
   backdrop-filter: blur(10px);
 
-  :hover{
+  :hover:enabled{
     /* background-color: ${COLORS["secondary-light"]}; */
     background-color: transparent;
   }
@@ -36,8 +44,8 @@ const SecondaryButton = styled(Button)`
 export function CustomButton(props) {
 
   return props.type == "secondary" ? (
-    <SecondaryButton onClick={props.onClick}> { props.children} </SecondaryButton>
+    <SecondaryButton disabled={props.disabled} onClick={props.onClick}> { props.children} </SecondaryButton>
   ) : (
-    <Button onClick={props.onClick}> {props.children} </Button>
+    <Button disabled={props.disabled} onClick={props.onClick}> {props.children} </Button>
   );
 }

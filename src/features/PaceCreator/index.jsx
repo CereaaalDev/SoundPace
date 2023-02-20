@@ -1,14 +1,17 @@
-
 import styled from "styled-components";
 import { useState } from "react";
 import { PlaylistChoice } from "./PlaylistChoice";
 import { Settings } from "./Settings";
+import { Stepper } from "../../components/stepper";
+import { CustomButton } from "../../components/button";
+import { useSelector } from "react-redux";
+import { CreatePlaylist } from "./CreatePlaylist";
 
 const HeaderSection = styled.section`
   width: 100vw;
 `;
 
-const ContentSsection = styled.section`
+const ContentSection = styled.section`
   background-color: white;
   width: 100vw;
   min-height: 80vh;
@@ -20,50 +23,33 @@ const HeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
 `;
 
 const ContentContainer = styled.div`
   max-width: min(1500px, 90vw);
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
-const PlaylistCardContainer = styled.div`
-  display: grid;
-  gap: 10px;
-  width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
-  justify-content: center;
 `;
 
 export function PaceCreator() {
-
-  const [step, setStep] = useState('1');
+  const { currentStep } = useSelector((state) => state.paceCreator)
 
   return (
     <>
       <HeaderSection>
         <HeaderContainer>
-          <h1>Erstelle deine Pacelist</h1>
-          <h6>Hier kommt dann der Stepper</h6>
-          <input onChange={(e)=>setStep(e.target.value)}/>
+          <h1>Wähle deine Quelle</h1>
         </HeaderContainer>
       </HeaderSection>
-      <ContentSsection>
+      <ContentSection>
         <ContentContainer>
 
-        {step === '1' ? 
-          <PlaylistChoice/> : null
-        }
-
-        {step === '2' ? 
-          <Settings/> : null
-        }
-         
+          {currentStep === 1 ? <PlaylistChoice /> : null}
+          {currentStep === 2 ? <Settings /> : null}
+          {currentStep === 3 ? <CreatePlaylist/> : null}
         </ContentContainer>
-      </ContentSsection>
+      </ContentSection>
     </>
   );
 }

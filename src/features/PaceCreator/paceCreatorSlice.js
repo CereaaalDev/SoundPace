@@ -3,6 +3,7 @@ import {
   getPlaylists,
   getTracksOfSelectedPlaylists,
   getAnalyticsOfSelectedTracks,
+  createPlaylist,
 } from "./paceCreatorActions";
 
 const initialState = {
@@ -10,6 +11,8 @@ const initialState = {
   userPlaylists: [], // Playlist des Users
   userLibrary: [], // Library des Users
   selectedTracks: [],
+  filteredTracks: [],
+  currentStep: 1,
   error: null,
 };
 
@@ -22,6 +25,15 @@ const paceCreatorSlice = createSlice({
       state.userPlaylists[index].selected =
         !state.userPlaylists[index].selected;
     },
+    nextStep(state) {
+     state.currentStep = state.currentStep + 1;
+    },
+    previousStep(state) {
+     state.currentStep = state.currentStep - 1;
+    },
+    addFilteredTracks(state, {payload}){
+      state.filteredTracks = payload;
+    }
   },
   extraReducers: {
     [getPlaylists.pending]: (state) => {
@@ -75,8 +87,20 @@ const paceCreatorSlice = createSlice({
       state.loading = false;
       state.loggedIn = false;
     },
+    [createPlaylist.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [createPlaylist.fulfilled]: (state, { payload }) => {
+      state.error = null;
+      state.loading = false;
+    },
+    [createPlaylist.rejected]: (state, action) => {
+      state.error = action.error.message;
+      state.loading = false;
+    }
   },
 });
 
-export const { selectPlaylist } = paceCreatorSlice.actions;
+export const { selectPlaylist, nextStep, previousStep, addFilteredTracks } = paceCreatorSlice.actions;
 export default paceCreatorSlice.reducer;

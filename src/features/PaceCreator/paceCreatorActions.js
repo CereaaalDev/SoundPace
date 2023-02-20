@@ -1,5 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { contentAPI } from "../../api/content";
+import axios from "axios";
+
+import { B64_COVER } from "../../assets/cover_b64_plain.js";
+import { imageAPI } from "../../api/image";
 
 export const getPlaylists = createAsyncThunk(
   "paceCreator/getPlaylists",
@@ -70,6 +74,52 @@ export const getAnalyticsOfSelectedTracks = createAsyncThunk(
         result = result.concat(response.data.audio_features);
       }
       return result;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.data);
+    }
+  }
+);
+
+export const createPlaylist = createAsyncThunk(
+  "paceCreator/createPlaylist",
+  async (playlistName, { getState, rejectWithValue }) => {
+    try {
+      const user_id = getState().auth.userInfo.id;
+      const createRequest = await contentAPI.post(
+        `/users/${user_id}/playlists`,
+        {
+          name: playlistName,
+          description:
+            "Playlist wurde mit SoundPace erstellt. Mehr Infos unter www.soundpace.ch",
+          public: false,
+        }
+      );
+
+      const trackURIs = getState().paceCreator.filteredTracks.map(
+        (track) => track.track.uri
+      );
+
+      if (!createRequest.data.id) {
+        return;
+      }
+
+      const imageRequest = await imageAPI.put(
+        `playlists/${createRequest.data.id}/images`,
+        B64_COVER,
+        null
+      );
+
+      console.log(imageRequest.data);
+      while (trackURIs.length > 0) {
+        const chunk = trackURIs.splice(0, 100);
+        const addRequest = await contentAPI.post(
+          `/playlists/${createRequest.data.id}/tracks`,
+          {
+            uris: chunk,
+          }
+        );
+      }
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
