@@ -2,10 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { PlaylistCard } from "../../components/playlistcard";
 import { getPlaylists } from "./paceCreatorActions";
-import { nextStep, previousStep, resetSuccess, selectPlaylist } from "./paceCreatorSlice";
+import { deselectAllPlaylists, nextStep, previousStep, resetSuccess, selectAllPlaylists, selectPlaylist } from "./paceCreatorSlice";
 import { Spinner } from "../../components/spinner";
 import { useEffect, useState } from "react";
 import { CustomButton } from "../../components/button";
+
+import { BiSelectMultiple, BiRefresh, BiTrash } from 'react-icons/bi';
+import { IconButton } from "../../components/iconbutton";
 
 const PlaylistCardContainer = styled.div`
   display: grid;
@@ -41,6 +44,14 @@ const SelectionDescription = styled.h6`
 const InstructionContainer = styled.div`
   padding: 2rem 0;
 `;
+
+const ControlsContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 3rem;
+`
 
 export function PlaylistChoice() {
   const { loading, userPlaylists } = useSelector((state) => state.paceCreator);
@@ -84,6 +95,14 @@ export function PlaylistChoice() {
           Nächster Schritt
         </CustomButton>
       </ButtonContainer>
+
+
+      <ControlsContainer>
+        <IconButton icon={<BiRefresh/>} onClick={()=>dispatch(getPlaylists())}>Aktualisieren</IconButton>
+        <IconButton icon={<BiSelectMultiple/>} onClick={()=>dispatch(selectAllPlaylists())} >Alle auswählen</IconButton>
+        <IconButton icon={<BiTrash/>} onClick={()=>dispatch(deselectAllPlaylists())}>Auswahl aufheben</IconButton>
+      </ControlsContainer>
+
 
       <PlaylistCardContainer>
         {userPlaylists && !loading ? (

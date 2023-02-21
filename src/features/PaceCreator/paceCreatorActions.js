@@ -7,20 +7,20 @@ import { imageAPI } from "../../api/image";
 
 export const getPlaylists = createAsyncThunk(
   "paceCreator/getPlaylists",
-  async (url, { dispatch, rejectWithValue }) => {
+  async (_, {rejectWithValue }) => {
     try {
-      let responsePlaylist = "";
+      let response = null;
+      let result = [];
 
-      if (!url) {
-        responsePlaylist = await contentAPI.get(`/me/playlists?limit=50`);
-      } else {
-        responsePlaylist = await contentAPI.get(url);
-      }
-      if (responsePlaylist.data.next) {
-        dispatch(getPlaylists(responsePlaylist.data.next));
-      }
+      response = await contentAPI.get(`/me/playlists?limit=50`);
+      result = result.concat(response.data.items);
 
-      return responsePlaylist.data;
+      while (response.data.next) {
+          response = await contentAPI.get(response.data.next);
+          result = result.concat(response.data.items);
+      }
+      return result;
+
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -30,7 +30,7 @@ export const getPlaylists = createAsyncThunk(
 
 export const getTracksOfSelectedPlaylists = createAsyncThunk(
   "paceCreator/getTracksOfSelectedPlaylists",
-  async (id, { getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       let selectedPlaylists = getState().paceCreator.userPlaylists.filter(
         (playlist) => playlist.selected
@@ -58,7 +58,7 @@ export const getTracksOfSelectedPlaylists = createAsyncThunk(
 
 export const getAnalyticsOfSelectedTracks = createAsyncThunk(
   "paceCreator/getAnalyticsOfSelectedTracks",
-  async (id, { getState, rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
       let trackIds = getState().paceCreator.selectedTracks.map(
         (track) => track.track.id
@@ -129,7 +129,7 @@ export const changePlaylistCover = createAsyncThunk(
     try {
       //Timeout damit Playlist wirklich angelegt ist bei Spotify
       const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds))
-      await sleep(3000);
+      await sleep(2000);
       await imageAPI.put(`/playlists/${id}/images`,B64_COVER);
     } catch (error) {
       console.log(error);

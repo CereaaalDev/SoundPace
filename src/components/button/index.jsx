@@ -19,9 +19,9 @@ const Button = styled.button`
   }
 
   :disabled {
-    background-color: #d7d6d6;
-    color: gray;
-    border-color: gray;
+    background-color: #e7e7e7;
+    color: #cac9c9;
+    border-color: #e7e7e7;
     cursor: auto;
   }
 `;

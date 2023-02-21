@@ -26,6 +26,12 @@ const paceCreatorSlice = createSlice({
       state.userPlaylists[index].selected =
         !state.userPlaylists[index].selected;
     },
+    selectAllPlaylists(state){
+      state.userPlaylists.forEach(playlist => playlist.selected = true);
+    },
+    deselectAllPlaylists(state){
+      state.userPlaylists.forEach(playlist => playlist.selected = false);
+    },
     nextStep(state) {
      state.currentStep = state.currentStep + 1;
     },
@@ -51,11 +57,9 @@ const paceCreatorSlice = createSlice({
       state.error = null;
     },
     [getPlaylists.fulfilled]: (state, { payload }) => {
-      if (payload.next === null) {
-        state.loading = false;
-      }
+      state.loading = false;
       state.error = null;
-      state.userPlaylists = state.userPlaylists.concat(payload.items);
+      state.userPlaylists = payload;
     },
     [getPlaylists.rejected]: (state, action) => {
       state.error = action.error.message;
@@ -113,5 +117,5 @@ const paceCreatorSlice = createSlice({
   },
 });
 
-export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess } = paceCreatorSlice.actions;
+export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess, selectAllPlaylists, deselectAllPlaylists } = paceCreatorSlice.actions;
 export default paceCreatorSlice.reducer;

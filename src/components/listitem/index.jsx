@@ -60,8 +60,17 @@ const MainTitle = styled.h6`
 
 const ValueContainer = styled.div`
   font-size: 14px;
+  display: flex;
+  gap: 5px;
 `
-
+const BadgeContainer = styled.div`
+  background-color: grey;
+  border-radius: 10px;
+  color: white;
+  padding: 0.5rem;
+  font-size: 9px;
+  flex: 0 0 auto;
+`
 
 export function ListItem(props) {
   return (
@@ -78,7 +87,16 @@ export function ListItem(props) {
         <MainTitle>{props.title}</MainTitle>
       </TitleContainer>
       <ValueContainer>
+        <BadgeContainer>
           <span>{props.value}</span>
+        </BadgeContainer>
+        <BadgeContainer>
+          <span>{props.value}</span>
+        </BadgeContainer>
+        <BadgeContainer>
+          <span>{props.value}</span>
+        </BadgeContainer>
+
       </ValueContainer>
     </ItemContainer>
   );
