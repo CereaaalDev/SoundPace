@@ -14,7 +14,12 @@ import { COLORS } from "../../util/Colors";
 import styled from "styled-components";
 import { ListItem } from "../../components/listitem";
 import { CustomButton } from "../../components/button";
-import { addFilteredTracks, nextStep, previousStep, resetSuccess } from "./paceCreatorSlice";
+import {
+  addFilteredTracks,
+  nextStep,
+  previousStep,
+  resetSuccess,
+} from "./paceCreatorSlice";
 
 const FilterContainer = styled.div`
   display: flex;
@@ -72,6 +77,8 @@ const SelectionDescription = styled.h6`
   margin: 0;
 `;
 
+const FilterLabelContainer = styled.div``;
+
 const paceLabel = [
   {
     value: 40,
@@ -108,18 +115,17 @@ export function Settings() {
   const { loading, selectedTracks } = useSelector((state) => state.paceCreator);
   const [filteredTracks, setFilteredTracks] = useState(selectedTracks);
   const [tempoFilter, setTempoFilter] = useState([80, 160]);
-  const [energyFilter, setEnergyFilter] = useState([0, 100]);
-  const [danceFilter, setDanceFilter] = useState([0, 100]);
+  const [energyFilter, setEnergyFilter] = useState(35);
+  const [danceFilter, setDanceFilter] = useState(35);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     //Initiales Laden der Tracks aus den ausgewählten Playlist und danach die zugehörigen Analytics
-      dispatch(getTracksOfSelectedPlaylists()).then(() =>
+    dispatch(getTracksOfSelectedPlaylists()).then(() =>
       dispatch(getAnalyticsOfSelectedTracks())
-      );
-      dispatch(resetSuccess())
-    
+    );
+    dispatch(resetSuccess());
   }, []);
 
   useEffect(() => {
@@ -128,10 +134,12 @@ export function Settings() {
         (track) =>
           track.analytics?.tempo > Math.min(...tempoFilter) &&
           track.analytics?.tempo < Math.max(...tempoFilter) &&
-          track.analytics?.energy > Math.min(...energyFilter) / 100 &&
-          track.analytics?.energy < Math.max(...energyFilter) / 100 &&
-          track.analytics?.danceability > Math.min(...danceFilter) / 100 &&
-          track.analytics?.danceability < Math.max(...danceFilter) / 100
+          track.analytics?.energy > energyFilter / 100 &&
+          track.analytics?.danceability > danceFilter / 100
+        // track.analytics?.energy > Math.min(...energyFilter) / 100 &&
+        // track.analytics?.energy < Math.max(...energyFilter) / 100 &&
+        // track.analytics?.danceability > Math.min(...danceFilter) / 100 &&
+        // track.analytics?.danceability < Math.max(...danceFilter) / 100
       )
     );
   }, [tempoFilter, energyFilter, danceFilter, loading]);
@@ -155,29 +163,42 @@ export function Settings() {
         <>
           <FilterContainer>
             <FilterBox>
-              <h3>Pace</h3>
+              <FilterLabelContainer>
+                <h3>Pace</h3>
+                <span>
+                  min. {Math.min(...tempoFilter)} BPM / max.{" "}
+                  {Math.max(...tempoFilter)} BPM
+                </span>
+              </FilterLabelContainer>
+
               <Slider
                 onChange={(e, value) => setTempoFilter(value)}
                 value={tempoFilter}
                 min={40}
                 max={200}
-                valueLabelDisplay="on"
+                valueLabelDisplay="auto"
                 sx={{
                   color: COLORS.primary,
                   width: "250px",
+                  paddingTop: "2rem",
                 }}
                 marks={paceLabel}
                 valueLabelFormat={(value) => <div>{value} BPM</div>}
               />
             </FilterBox>
             <FilterBox>
-              <h3>Energie</h3>
+              <FilterLabelContainer>
+                <h3>Energylevel</h3>
+                <span>
+                  min. {energyFilter} %
+                </span>
+              </FilterLabelContainer>
               <Slider
                 onChange={(e, value) => setEnergyFilter(value)}
                 value={energyFilter}
                 min={0}
                 max={100}
-                valueLabelDisplay="on"
+                valueLabelDisplay="auto"
                 sx={{
                   color: COLORS.primary,
                   width: "250px",
@@ -186,13 +207,18 @@ export function Settings() {
               />
             </FilterBox>
             <FilterBox>
-              <h3>Tanzbarkeit</h3>
+              <FilterLabelContainer>
+                <h3>Tanzbarkeit</h3>
+                <span>
+                  min. {danceFilter} %
+                </span>
+              </FilterLabelContainer>
               <Slider
                 onChange={(e, value) => setDanceFilter(value)}
                 value={danceFilter}
                 min={0}
                 max={100}
-                valueLabelDisplay="on"
+                valueLabelDisplay="auto"
                 sx={{
                   color: COLORS.primary,
                   width: "250px",
@@ -204,7 +230,8 @@ export function Settings() {
 
           <SelectionContainer>
             <SelectionValue>
-              {filteredTracks.length} <span>/ {selectedTracks.length} Tracks </span>
+              {filteredTracks.length}{" "}
+              <span>/ {selectedTracks.length} Tracks </span>
             </SelectionValue>
             <SelectionDescription>
               entsprechen den Filterkriterien
@@ -240,6 +267,10 @@ export function Settings() {
                       .map((artist) => artist.name)
                       .join(", ")}
                     index={index + 1}
+                    value={[
+                      Math.round(track.analytics.tempo) + " BPM",
+                      Math.round(track.analytics.danceability * 100) + "%",
+                    ]}
                   />
                 ))
               : null}

@@ -1,5 +1,20 @@
 import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+
+import { IoClose } from "react-icons/io5";
+
+const RemoveContainer = styled.div`
+  color: black;
+  cursor: pointer;
+  opacity: 0;
+  font-size: 26px;
+  padding: 0.5rem;
+  padding-right: 1rem;
+  :hover {
+    color: red;
+  }
+`;
 
 const ItemContainer = styled.div`
   display: flex;
@@ -7,8 +22,11 @@ const ItemContainer = styled.div`
   max-width: 100%;
   gap: 1rem;
   padding: 0.5rem;
-  &:hover {
+  :hover {
     background-color: #ededed;
+  }
+  :hover ${RemoveContainer} {
+    opacity: 1;
   }
 `;
 const IndexContainer = styled.div`
@@ -22,12 +40,12 @@ const IndexContainer = styled.div`
 const ImageContainer = styled.div`
   img {
     //TODO: Convert img size to inline-size tag
-    width:64px;
+    width: 64px;
     height: auto;
     display: block;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     display: none;
   }
 `;
@@ -57,12 +75,11 @@ const MainTitle = styled.h6`
   overflow: hidden;
 `;
 
-
 const ValueContainer = styled.div`
   font-size: 14px;
   display: flex;
   gap: 5px;
-`
+`;
 const BadgeContainer = styled.div`
   background-color: grey;
   border-radius: 10px;
@@ -70,7 +87,7 @@ const BadgeContainer = styled.div`
   padding: 0.5rem;
   font-size: 9px;
   flex: 0 0 auto;
-`
+`;
 
 export function ListItem(props) {
   return (
@@ -80,24 +97,31 @@ export function ListItem(props) {
         <span>{props.index}</span>
       </IndexContainer>
       <ImageContainer>
-        <img src={props.imgSrc}></img>
+        <LazyLoadImage src={props.imgSrc} />
       </ImageContainer>
       <TitleContainer>
         <Subtitle>{props.subtitle}</Subtitle>
         <MainTitle>{props.title}</MainTitle>
       </TitleContainer>
       <ValueContainer>
-        <BadgeContainer>
-          <span>{props.value}</span>
-        </BadgeContainer>
-        <BadgeContainer>
-          <span>{props.value}</span>
-        </BadgeContainer>
-        <BadgeContainer>
-          <span>{props.value}</span>
-        </BadgeContainer>
-
+        {props.value
+          ? props.value.map((value, index) => {
+              return (
+                <BadgeContainer key={index}>
+                  <span>{value}</span>
+                </BadgeContainer>
+              );
+            })
+          : null}
       </ValueContainer>
+
+      {props.removable ? (
+        <RemoveContainer onClick={props.onClick}>
+          <span>
+            <IoClose />
+          </span>
+        </RemoveContainer>
+      ) : null}
     </ItemContainer>
   );
 }

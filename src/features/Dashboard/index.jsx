@@ -86,7 +86,46 @@ const SelectorGroup = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  flex-wrap: nowrap;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  //kleinere Selector-Group auf kleineren Geräten
+  @media (max-width: 768px) {
+    > * {
+      flex: 0;
+    }
+  }
+
+  input {
+    display: none;
+  }
+  label {
+    background-color: white;
+    display: inline-block;
+    padding: 1rem;
+    cursor: pointer;
+    border: 1px solid ${COLORS["bg-grey"]};
+    transition: all 0.2s ease;
+  }
+  label:first-of-type {
+    border-radius: 8px 0 0 8px;
+    border-right: none;
+  }
+  label:last-child {
+    border-radius: 0 8px 8px 0;
+    border-left: none;
+  }
+  label:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    color: ${COLORS.primary};
+  }
+
+  input:checked + label {
+    background-color: ${COLORS.primary};
+    color: white;
+    border: 1px solid ${COLORS.primary};
+  }
 `;
 
 export default function Dashboard() {
@@ -138,33 +177,30 @@ export default function Dashboard() {
             />
           </CardsContainer>
           <SelectorGroup>
-            <label>
-              <input
-                type="radio"
-                name="timespan"
-                checked={timeSpan === 'short_term'}
-                onChange={() => setTimeSpan("short_term")}
-              />
-              Letzte 4 Wochen
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="timespan"
-                checked={timeSpan === 'medium_term'}
-                onChange={() => setTimeSpan("medium_term")}
-              />
-              Letzte 6 Monate
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="timespan"
-                checked={timeSpan === 'long_term'}
-                onChange={() => setTimeSpan("long_term")}
-              />
-              Seit beginn
-            </label>
+            <input
+              id="radio1"
+              type="radio"
+              name="timespan"
+              checked={timeSpan === "short_term"}
+              onChange={() => setTimeSpan("short_term")}
+            />
+            <label for="radio1">Letzte 4 Wochen</label>
+            <input
+              id="radio2"
+              type="radio"
+              name="timespan"
+              checked={timeSpan === "medium_term"}
+              onChange={() => setTimeSpan("medium_term")}
+            />
+            <label for="radio2">Letzte 6 Monate</label>
+            <input
+              id="radio3"
+              type="radio"
+              name="timespan"
+              checked={timeSpan === "long_term"}
+              onChange={() => setTimeSpan("long_term")}
+            />
+            <label for="radio3">Seit beginn</label>
           </SelectorGroup>
         </StatsCardsContainer>
         <ListSection>
@@ -180,13 +216,13 @@ export default function Dashboard() {
                         index={index + 1}
                         imgSrc={track.imageURL}
                         title={track.name}
-                        subtitle={track.artist.map(
-                          (artist) => artist.name).join(', ')
-                        }
+                        subtitle={track.artist
+                          .map((artist) => artist.name)
+                          .join(", ")}
                         value={
                           track.analytics
-                            ? Math.round(track.analytics.tempo) + " BPM"
-                            : "..."
+                            ? [Math.round(track.analytics.tempo) + " BPM"]
+                            : ["..."]
                         }
                       />
                     );
@@ -208,7 +244,7 @@ export default function Dashboard() {
                         index={index + 1}
                         imgSrc={artist.images[0].url}
                         title={artist.name}
-                        value={100 - artist.popularity + "% HL"}
+                        value={[100 - artist.popularity + "% HL"]}
                       />
                     );
                   })

@@ -14,10 +14,11 @@ const PlaylistCardContainer = styled.div`
   display: grid;
   gap: 10px;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(150px, max-content));
+  grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
   justify-content: center;
   max-height: 70vh;
-  overflow: auto;
+  overflow-Y: auto;
+  overflow-x: hidden;
   margin-top: 4rem;
 `;
 
@@ -51,6 +52,7 @@ const ControlsContainer = styled.div`
   width: 100%;
   justify-content: flex-end;
   margin-top: 3rem;
+  flex-wrap: wrap;
 `
 
 export function PlaylistChoice() {

@@ -49,6 +49,10 @@ const paceCreatorSlice = createSlice({
     },
     resetSuccess(state) {
       state.createPlaylistSuccessfull = null;
+    },
+    removeFilteredTrack(state, {payload}){
+      const index = state.filteredTracks.findIndex(element => element.track.id === payload);
+      state.filteredTracks.splice(index, 1);
     }
   },
   extraReducers: {
@@ -117,5 +121,5 @@ const paceCreatorSlice = createSlice({
   },
 });
 
-export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess, selectAllPlaylists, deselectAllPlaylists } = paceCreatorSlice.actions;
+export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess, selectAllPlaylists, deselectAllPlaylists, removeFilteredTrack} = paceCreatorSlice.actions;
 export default paceCreatorSlice.reducer;

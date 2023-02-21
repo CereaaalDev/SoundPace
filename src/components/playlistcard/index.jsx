@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const CardContainer = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ const Tracks = styled.h6`
 export function PlaylistCard(props) {
   return (
     <CardContainer selected={props.selected} onClick={props.onClick}>
-      <img
+      <LazyLoadImage
         src={props.imgSrc}
       />
       <Title>{props.title}</Title>
