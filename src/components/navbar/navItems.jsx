@@ -71,9 +71,6 @@ export function NavItems() {
             <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
           <li>
-            <NavLink to="/pacecreator">Explorer</NavLink>
-          </li>
-          <li>
             <NavLink to="/pacecreator">PaceCreator</NavLink>
           </li>
           <li>
@@ -108,9 +105,6 @@ export function NavItems() {
                 <NavLink onClick={() => toggleMenu(false)} to="/dashboard">
                   Dashboard
                 </NavLink>
-              </li>
-              <li>
-                <NavLink to="/pacecreator">Explorer</NavLink>
               </li>
               <li>
                 <NavLink onClick={() => toggleMenu(false)} to="/pacecreator">

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { COLORS } from "./Colors";
 import { FONTSIZE } from "./FontSizes";
 
 export default createGlobalStyle`
@@ -58,6 +59,9 @@ h5{
   font-weight: 400;
   margin-top: 1rem;
   margin-bottom: 1rem;
+  color: ${COLORS.primary};
+  font-weight: 600;
+    
 }
 h6{
   font-size: var(--step-0);

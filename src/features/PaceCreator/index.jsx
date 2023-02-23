@@ -1,29 +1,27 @@
 import styled from "styled-components";
-import { useState } from "react";
 import { PlaylistChoice } from "./PlaylistChoice";
 import { Settings } from "./Settings";
 import { Stepper } from "../../components/stepper";
-import { CustomButton } from "../../components/button";
 import { useSelector } from "react-redux";
 import { CreatePlaylist } from "./CreatePlaylist";
 
 const HeaderSection = styled.section`
-  width: 100vw;
+  width: 100%;
 `;
 
 const ContentSection = styled.section`
   background-color: white;
-  width: 100vw;
+  width: 100%;
   min-height: 80vh;
 `;
 
 const HeaderContainer = styled.div`
   max-width: min(1500px, 90vw);
   margin: 0 auto;
+  padding: 100px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 1rem;
 `;
 
 const ContentContainer = styled.div`

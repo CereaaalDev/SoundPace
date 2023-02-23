@@ -15,9 +15,9 @@ const SectionContainer = styled.div`
   display: flex;
   max-width: min(90vw, 1500px);
   min-height: 50vh;
-  /* justify-content: center; */
   align-items: center;
-  margin: 3rem auto;
+  padding: 3rem 0;
+  margin: 0 auto;
 `;
 
 const LeftContainer = styled.div`
@@ -34,9 +34,30 @@ const BackgroundImage = styled.img`
 
 const ButtonGroup = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   margin-top: 3rem;
   flex-wrap: wrap;
+  align-items: center;
+`;
+
+const ModalLink = styled.a`
+  cursor: pointer;
+  position: relative;
+  :hover {
+    color: ${COLORS.primary};
+  }
+`;
+
+const ModalMessage = styled.div`
+  padding: 2rem;
+  max-width: 60vw;
+  width: 250px;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+  top: 50px;
+  cursor: auto;
+  z-index: 50;
 `;
 
 function HeroSection() {
@@ -44,6 +65,7 @@ function HeroSection() {
   const dispatch = useDispatch();
   const { userInfo, loading } = useSelector((state) => state.auth);
   const [logininProgress, setLoginInProgress] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   let popupWindow;
   let popupClosedInterval;
@@ -98,21 +120,33 @@ function HeroSection() {
   return (
     <SectionContainer>
       <LeftContainer>
-        <h1>Entdecke Musik genau in deiner Pace</h1>
+        {Object.keys(userInfo).length === 0 ? (
+          <h1>Entdecke Musik genau in deiner Pace</h1>
+        ) : (
+          <h1> Hi {userInfo.name}, entdecke Musik genau in deiner Pace</h1>
+        )}
+
         <h6>
           Erhalte neue Einblicke in deine Lieblingsmusik auf Spotify und
-          erstelle Playlist genau nach deinem Tempo. Oder suche einfach nach
-          neuen Tracks in der öffentlichen Suche.
+          erstelle Playlist genau nach deinem Tempo. Du brauchst nur dein
+          Spotify-Login und schon kann es losgehen.
         </h6>
         <ButtonGroup>
           <CustomButton onClick={openLoginPopup}>
             Mit Spotify einloggen
           </CustomButton>
-          <CustomButton type="secondary">Generelle Suche</CustomButton>
+          <ModalLink onClick={() => setOpenModal(!openModal)}>
+            Noch kein Zugang?
+            {openModal ? 
+            (<ModalMessage>
+              <p>Damit du die Webseite mit deinem eigenen Account verwenden kannst, muss dein Spotify-Account zuerst durch den Administrator der Seite freigegeben werden. Dies ist nicht mehr nötig sobald das Review durch Spotify ageschlossen ist. </p>
+            </ModalMessage>) : null }
+          </ModalLink>
         </ButtonGroup>
         <BackgroundImage src="src/assets/soundwaves.svg" alt="" />
       </LeftContainer>
-      {logininProgress ? <LoadingOverlay /> : ""}
+      {logininProgress ? <LoadingOverlay /> : null}
+      
     </SectionContainer>
   );
 }

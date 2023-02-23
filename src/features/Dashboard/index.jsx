@@ -17,6 +17,7 @@ const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 70px;
 `;
 
 const AvatarContainer = styled.div`
@@ -81,6 +82,8 @@ const List = styled.div`
   max-height: max(400px, 35vh);
   overflow: scroll;
 `;
+
+
 
 const SelectorGroup = styled.div`
   width: 100%;
@@ -202,6 +205,7 @@ export default function Dashboard() {
             />
             <label for="radio3">Seit beginn</label>
           </SelectorGroup>
+         
         </StatsCardsContainer>
         <ListSection>
           <ListGroup>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Spinner } from "../spinner";
 
 
 const BackgroundContainer = styled.div`
@@ -15,13 +16,15 @@ const BackgroundContainer = styled.div`
   justify-content: center;
   color: white;
   transition: all 5s ease-in;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
+  flex-direction: column;
 `;
 
 export function LoadingOverlay () {
     return (
         <BackgroundContainer>
-            <h1>Logge dich im neuen Fenster ein...</h1>
+            <Spinner/>
+            <h4>Logge dich im neuen Fenster ein...</h4>
         </BackgroundContainer>
     )
 }
