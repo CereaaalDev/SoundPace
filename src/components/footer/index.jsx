@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
+import TiltShape from "../../assets/icons/tilt.svg"
 
 
 const SectionContainer = styled.div`
@@ -22,7 +23,7 @@ export function Footer() {
     <>
       <SectionContainer>
       <Divider>
-        <img src="src/assets/icons/tilt.svg" alt="" />
+        <img src={TiltShape} alt="" />
       </Divider>
         <h6 style={{marginRight: '5vw', marginBottom: 0, paddingBottom: '0.5rem', fontSize: '11px'}} > © 2023 - Made with ❤️ by Cyrill Burren</h6>
       </SectionContainer>

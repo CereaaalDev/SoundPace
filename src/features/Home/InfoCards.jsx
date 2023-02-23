@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { FeautureCard } from "../../components/feautureCard";
 import { COLORS } from "../../util/Colors";
+import AnalyzeIcon from "../../assets/icons/analyze.svg"
+import TiltShape from "../../assets/icons/tilt.svg"
+import LupeIcon from "../../assets/icons/lupe.svg"
+import NewIcon from "../../assets/icons/new.svg"
 
 const SectionContainer = styled.div`
   width: 100vw;
@@ -32,22 +36,22 @@ export function InfoCards() {
   return (
     <>
       <Divider>
-        <img src="src/assets/icons/tilt.svg"/>
+        <img src={TiltShape}/>
       </Divider>
       <SectionContainer>
         <InfoCardsContainer>
           <FeautureCard
-            icon="src/assets/icons/analyze.svg"
+            icon={AnalyzeIcon}
             title="Analysiere deine Musik"
             description="Lass deine Songs analyiseren und entdecke neue Eigenschaften deiner Lieblingsongs"
           />
           <FeautureCard
-            icon="src/assets/icons/lupe.svg"
+            icon={LupeIcon}
             title="Entdecke neue Kobinationen"
             description="Filtere und kombiniere deine Songs nach Geschwindigkeit, Tanzbarkeit und vielem mehr."
           />
           <FeautureCard
-            icon="src/assets/icons/new.svg"
+            icon={NewIcon}
             title="Kreiere neue Playlists"
             description="Kombiniere deine Musik auf ganz andere Art und Weise"
           />

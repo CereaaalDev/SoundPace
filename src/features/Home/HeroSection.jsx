@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
 import { CustomButton } from "../../components/button";
 import { LoadingOverlay } from "../../components/loadingoverlay";
+import BackgroundShape from "../../assets/soundwaves.svg"
 
 import { login } from "../Auth/authActions";
 import { getLoginUrl } from "../../api/auth";
@@ -165,7 +166,7 @@ export default function HeroSection() {
             </ModalLink>
           )}
         </ButtonGroup>
-        <BackgroundImage src="src/assets/soundwaves.svg" alt="" />
+        <BackgroundImage src={BackgroundShape} alt="" />
       </LeftContainer>
       {logininProgress ? <LoadingOverlay /> : null}
     </SectionContainer>
