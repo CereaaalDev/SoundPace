@@ -129,7 +129,7 @@ export function Settings() {
   }, []);
 
   useEffect(() => {
-    if(selectedTracks){
+    if(selectedTracks.length > 0){
       setFilteredTracks(
       selectedTracks.filter(
         (track) =>
