@@ -129,7 +129,8 @@ export function Settings() {
   }, []);
 
   useEffect(() => {
-    setFilteredTracks(
+    if(selectedTracks){
+      setFilteredTracks(
       selectedTracks.filter(
         (track) =>
           track.analytics?.tempo > Math.min(...tempoFilter) &&
@@ -138,6 +139,8 @@ export function Settings() {
           track.analytics?.danceability > danceFilter / 100
       )
     );
+    }
+
   }, [tempoFilter, energyFilter, danceFilter, loading]);
 
   return (
