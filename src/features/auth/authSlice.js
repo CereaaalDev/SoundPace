@@ -12,40 +12,40 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout (state) {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token')
+    logout(state) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
       state.loading = false;
-      state.userInfo = {}
+      state.userInfo = {};
       state.error = null;
       state.loggedIn = false;
-    }
+    },
   },
-  extraReducers: {
-    [login.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(login.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [login.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.error = null;
-      state.userInfo = {
-        name: payload.display_name,
-        id: payload.id,
-        imageURL: payload.images[0].url,
-        profileURL: payload.external_urls.spotify,
-      };
-      state.loggedIn = true;
-    },
-    [login.rejected]: (state, action) => {
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token')
-      state.error = action.error.message;
-      state.loading = false;
-      state.loggedIn = false;
-    },
+    }),
+      builder.addCase(login.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.userInfo = {
+          name: payload.display_name,
+          id: payload.id,
+          imageURL: payload.images[0].url,
+          profileURL: payload.external_urls.spotify,
+        };
+        state.loggedIn = true;
+      }),
+      builder.addCase(login.rejected, (state, action) => {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        state.error = action.error.message;
+        state.loading = false;
+        state.loggedIn = false;
+      });
   },
 });
 
-export const {logout} = authSlice.actions;
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

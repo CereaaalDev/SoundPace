@@ -61,7 +61,7 @@ const ModalMessage = styled.div`
 export default function HeroSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo, loggedIn } = useSelector((state) => state.auth);
   const [logininProgress, setLoginInProgress] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
@@ -137,24 +137,33 @@ export default function HeroSection() {
           Spotify-Login und schon kann es losgehen.
         </h6>
         <ButtonGroup>
-          <CustomButton onClick={openLoginPopup}>
-            Mit Spotify einloggen
-          </CustomButton>
-          <ModalLink onClick={() => setOpenModal(!openModal)}>
-            Noch kein Zugang?
-            {openModal ? (
-              <ModalMessage>
-                <p>
-                  Damit du die Webseite mit deinem eigenen Spotify-Account
-                  verwenden kannst, muss dieser zuerst freigegeben werden.
-                  Kontaktiere mich und teil mir die Email-Adresse deines
-                  Spotify-Accounts mit, damit ich dich freischalten kan. Dies
-                  ist nicht mehr nötig sobald das Review durch Spotify
-                  abgeschlossen ist.{" "}
-                </p>
-              </ModalMessage>
-            ) : null}
-          </ModalLink>
+          {loggedIn ? (
+            <CustomButton onClick={() => navigate("/dashboard")}>
+              Zum Dashboard
+            </CustomButton>
+          ) : (
+            <CustomButton onClick={openLoginPopup}>
+              Mit Spotify einloggen
+            </CustomButton>
+          )}
+
+          {loggedIn ? null : (
+            <ModalLink onClick={() => setOpenModal(!openModal)}>
+              Noch kein Zugang?
+              {openModal ? (
+                <ModalMessage>
+                  <p>
+                    Damit du die Webseite mit deinem eigenen Spotify-Account
+                    verwenden kannst, muss dieser zuerst freigegeben werden.
+                    Kontaktiere mich und teil mir die Email-Adresse deines
+                    Spotify-Accounts mit, damit ich dich freischalten kan. Dies
+                    ist nicht mehr nötig sobald das Review durch Spotify
+                    abgeschlossen ist.{" "}
+                  </p>
+                </ModalMessage>
+              ) : null}
+            </ModalLink>
+          )}
         </ButtonGroup>
         <BackgroundImage src="src/assets/soundwaves.svg" alt="" />
       </LeftContainer>

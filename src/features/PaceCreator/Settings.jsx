@@ -136,10 +136,6 @@ export function Settings() {
           track.analytics?.tempo < Math.max(...tempoFilter) &&
           track.analytics?.energy > energyFilter / 100 &&
           track.analytics?.danceability > danceFilter / 100
-        // track.analytics?.energy > Math.min(...energyFilter) / 100 &&
-        // track.analytics?.energy < Math.max(...energyFilter) / 100 &&
-        // track.analytics?.danceability > Math.min(...danceFilter) / 100 &&
-        // track.analytics?.danceability < Math.max(...danceFilter) / 100
       )
     );
   }, [tempoFilter, energyFilter, danceFilter, loading]);
@@ -265,7 +261,8 @@ export function Settings() {
                     index={index + 1}
                     value={[
                       Math.round(track.analytics.tempo) + " BPM",
-                      Math.round(track.analytics.danceability * 100) + "%",
+                      Math.round(track.analytics.energy * 100) + "% E",
+                      Math.round(track.analytics.danceability * 100) + "% T",
                     ]}
                   />
                 ))

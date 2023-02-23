@@ -26,22 +26,22 @@ const paceCreatorSlice = createSlice({
       state.userPlaylists[index].selected =
         !state.userPlaylists[index].selected;
     },
-    selectAllPlaylists(state){
-      state.userPlaylists.forEach(playlist => playlist.selected = true);
+    selectAllPlaylists(state) {
+      state.userPlaylists.forEach((playlist) => (playlist.selected = true));
     },
-    deselectAllPlaylists(state){
-      state.userPlaylists.forEach(playlist => playlist.selected = false);
+    deselectAllPlaylists(state) {
+      state.userPlaylists.forEach((playlist) => (playlist.selected = false));
     },
     nextStep(state) {
-     state.currentStep = state.currentStep + 1;
+      state.currentStep = state.currentStep + 1;
     },
     previousStep(state) {
-     state.currentStep = state.currentStep - 1;
+      state.currentStep = state.currentStep - 1;
     },
-    addFilteredTracks(state, {payload}){
+    addFilteredTracks(state, { payload }) {
       state.filteredTracks = payload;
     },
-    restart(state){
+    restart(state) {
       state.selectedTracks = [];
       state.filteredTracks = [];
       state.userPlaylists = [];
@@ -50,76 +50,100 @@ const paceCreatorSlice = createSlice({
     resetSuccess(state) {
       state.createPlaylistSuccessfull = null;
     },
-    removeFilteredTrack(state, {payload}){
-      const index = state.filteredTracks.findIndex(element => element.track.id === payload);
+    removeFilteredTrack(state, { payload }) {
+      const index = state.filteredTracks.findIndex(
+        (element) => element.track.id === payload
+      );
       state.filteredTracks.splice(index, 1);
-    }
+    },
   },
-  extraReducers: {
-    [getPlaylists.pending]: (state) => {
+  extraReducers: (builder) => {
+    builder.addCase(getPlaylists.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getPlaylists.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.error = null;
-      state.userPlaylists = payload;
-    },
-    [getPlaylists.rejected]: (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-    },
-    [getTracksOfSelectedPlaylists.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [getTracksOfSelectedPlaylists.fulfilled]: (state, { payload }) => {
-      state.selectedTracks = payload;
-      state.loading = false;
-      state.error = null;
-    },
-    [getTracksOfSelectedPlaylists.rejected]: (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-    },
-    [getAnalyticsOfSelectedTracks.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [getAnalyticsOfSelectedTracks.fulfilled]: (state, { payload }) => {
-      payload.forEach((element) => {
-        //Prüfung ob element nicht null ist (kann vorkommen wenn zu einem Song noch keine Analytics da sind)
-        if (!element) {
-          return;
+    }),
+      builder.addCase(getPlaylists.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.userPlaylists = payload;
+      }),
+      builder.addCase(getPlaylists.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
+      }),
+      builder.addCase(getTracksOfSelectedPlaylists.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      }),
+      builder.addCase(
+        getTracksOfSelectedPlaylists.fulfilled,
+        (state, { payload }) => {
+          state.selectedTracks = payload;
+          state.loading = false;
+          state.error = null;
         }
-        let index = state.selectedTracks.findIndex(
-          (track) => track.track.id === element.id
-        );
-        state.selectedTracks[index].analytics = element;
+      ),
+      builder.addCase(
+        getTracksOfSelectedPlaylists.rejected,
+        (state, action) => {
+          state.error = action.error.message;
+          state.loading = false;
+        }
+      ),
+      builder.addCase(getAnalyticsOfSelectedTracks.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      }),
+      builder.addCase(
+        getAnalyticsOfSelectedTracks.fulfilled,
+        (state, { payload }) => {
+          payload.forEach((element) => {
+            //Prüfung ob element nicht null ist (kann vorkommen wenn zu einem Song noch keine Analytics da sind)
+            if (!element) {
+              return;
+            }
+            let index = state.selectedTracks.findIndex(
+              (track) => track.track.id === element.id
+            );
+            state.selectedTracks[index].analytics = element;
+          });
+          state.loading = false;
+          state.error = null;
+        }
+      ),
+      builder.addCase(
+        getAnalyticsOfSelectedTracks.rejected,
+        (state, action) => {
+          state.error = action.error.message;
+          state.loading = false;
+          state.loggedIn = false;
+        }
+      ),
+      builder.addCase(createPlaylist.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      }),
+      builder.addCase(createPlaylist.fulfilled, (state) => {
+        state.error = null;
+        state.loading = false;
+        state.createPlaylistSuccessfull = true;
+      }),
+      builder.addCase(createPlaylist.rejected, (state, action) => {
+        state.error = action.error.message;
+        state.loading = false;
       });
-      state.loading = false;
-      state.error = null;
-    },
-    [getAnalyticsOfSelectedTracks.rejected]: (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-      state.loggedIn = false;
-    },
-    [createPlaylist.pending]: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    [createPlaylist.fulfilled]: (state, { payload }) => {
-      state.error = null;
-      state.loading = false;
-      state.createPlaylistSuccessfull = true;
-    },
-    [createPlaylist.rejected]: (state, action) => {
-      state.error = action.error.message;
-      state.loading = false;
-    }
   },
 });
 
-export const { selectPlaylist, nextStep, previousStep, addFilteredTracks, restart, resetSuccess, selectAllPlaylists, deselectAllPlaylists, removeFilteredTrack} = paceCreatorSlice.actions;
+export const {
+  selectPlaylist,
+  nextStep,
+  previousStep,
+  addFilteredTracks,
+  restart,
+  resetSuccess,
+  selectAllPlaylists,
+  deselectAllPlaylists,
+  removeFilteredTrack,
+} = paceCreatorSlice.actions;
 export default paceCreatorSlice.reducer;
