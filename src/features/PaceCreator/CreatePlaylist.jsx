@@ -6,7 +6,7 @@ import { COLORS } from "/src/util/Colors";
 import { ListItem } from "/src/components/listitem";
 import { Spinner } from "/src/components/spinner";
 import { CustomButton } from "/src/components/button";
-import SoundPaceCover from "/src/assets/soundpacecover.jpg"
+import SoundPaceCover from "/src/assets/soundpacecover.jpg";
 
 import { createPlaylist } from "./paceCreatorActions";
 import { previousStep, removeFilteredTrack, restart } from "./paceCreatorSlice";
