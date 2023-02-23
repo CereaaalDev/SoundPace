@@ -6,7 +6,7 @@ import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { useState } from "react";
 import { CustomButton } from "../button";
-import { logout } from "../../features/auth/authSlice";
+import { logout } from "../../features/Auth/authSlice";
 import { useDispatch } from "react-redux";
 
 const ListContainer = styled.ul`

@@ -1,15 +1,13 @@
-import { CustomButton } from "../../components/button";
-//import Login from '../auth/Login'
-
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { COLORS } from "../../util/Colors";
-import { login } from "../auth/authActions";
-
-import { getLoginUrl } from "../../api/auth";
-import { useState } from "react";
+import { CustomButton } from "../../components/button";
 import { LoadingOverlay } from "../../components/loadingoverlay";
+
+import { login } from "../Auth/authActions";
+import { getLoginUrl } from "../../api/auth";
 
 const SectionContainer = styled.div`
   display: flex;
@@ -60,10 +58,10 @@ const ModalMessage = styled.div`
   z-index: 50;
 `;
 
-function HeroSection() {
+export default function HeroSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo, loading } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
   const [logininProgress, setLoginInProgress] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
@@ -103,9 +101,16 @@ function HeroSection() {
 
         popupWindow.close();
         //code aus URL and Login-Action weitergeben
-        dispatch(login(message.data.payload.code));
-        navigate("/dashboard");
-        window.removeEventListener("message", handleWindowMessage);
+        dispatch(login(message.data.payload.code))
+          .unwrap()
+          .then(() => {
+            navigate("/dashboard");
+            window.removeEventListener("message", handleWindowMessage);
+          })
+          .catch((err) => {
+            navigate("/account-signup");
+            window.removeEventListener("message", handleWindowMessage);
+          });
       }
     } catch (error) {
       console.error(error);
@@ -137,17 +142,23 @@ function HeroSection() {
           </CustomButton>
           <ModalLink onClick={() => setOpenModal(!openModal)}>
             Noch kein Zugang?
-            {openModal ? 
-            (<ModalMessage>
-              <p>Damit du die Webseite mit deinem eigenen Account verwenden kannst, muss dein Spotify-Account zuerst durch den Administrator der Seite freigegeben werden. Dies ist nicht mehr nötig sobald das Review durch Spotify ageschlossen ist. </p>
-            </ModalMessage>) : null }
+            {openModal ? (
+              <ModalMessage>
+                <p>
+                  Damit du die Webseite mit deinem eigenen Spotify-Account
+                  verwenden kannst, muss dieser zuerst freigegeben werden.
+                  Kontaktiere mich und teil mir die Email-Adresse deines
+                  Spotify-Accounts mit, damit ich dich freischalten kan. Dies
+                  ist nicht mehr nötig sobald das Review durch Spotify
+                  abgeschlossen ist.{" "}
+                </p>
+              </ModalMessage>
+            ) : null}
           </ModalLink>
         </ButtonGroup>
         <BackgroundImage src="src/assets/soundwaves.svg" alt="" />
       </LeftContainer>
       {logininProgress ? <LoadingOverlay /> : null}
-      
     </SectionContainer>
   );
 }
-export default HeroSection;

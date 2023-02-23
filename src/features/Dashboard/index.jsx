@@ -1,17 +1,15 @@
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+
 import { Avatar } from "../../components/avatar";
 import { Statcard } from "../../components/statcard";
 import { COLORS } from "../../util/Colors";
 import { GiMustache } from "react-icons/gi";
 import { ListItem } from "../../components/listitem";
-import { useEffect } from "react";
+import { Spinner } from "../../components/spinner";
 
 import { getTracks, getTrackAnalytics, calculateStats } from "./userTopActions";
-import { CustomButton } from "../../components/button";
-import { Spinner } from "../../components/spinner";
-import { useState } from "react";
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -82,8 +80,6 @@ const List = styled.div`
   max-height: max(400px, 35vh);
   overflow: scroll;
 `;
-
-
 
 const SelectorGroup = styled.div`
   width: 100%;
@@ -187,7 +183,7 @@ export default function Dashboard() {
               checked={timeSpan === "short_term"}
               onChange={() => setTimeSpan("short_term")}
             />
-            <label for="radio1">Letzte 4 Wochen</label>
+            <label htmlFor="radio1">Letzte 4 Wochen</label>
             <input
               id="radio2"
               type="radio"
@@ -195,7 +191,7 @@ export default function Dashboard() {
               checked={timeSpan === "medium_term"}
               onChange={() => setTimeSpan("medium_term")}
             />
-            <label for="radio2">Letzte 6 Monate</label>
+            <label htmlFor="radio2">Letzte 6 Monate</label>
             <input
               id="radio3"
               type="radio"
@@ -203,9 +199,8 @@ export default function Dashboard() {
               checked={timeSpan === "long_term"}
               onChange={() => setTimeSpan("long_term")}
             />
-            <label for="radio3">Seit beginn</label>
+            <label htmlFor="radio3">Seit beginn</label>
           </SelectorGroup>
-         
         </StatsCardsContainer>
         <ListSection>
           <ListGroup>

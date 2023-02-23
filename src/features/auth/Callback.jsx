@@ -16,5 +16,5 @@ export default function Callback() {
     });
   }, []);
 
-  return <h2>Ja das kommt nach dem Login</h2>;
+  return <h2>Login-Request ausgeführt</h2>;
 }

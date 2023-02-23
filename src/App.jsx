@@ -1,24 +1,19 @@
-import { Outlet } from "react-router-dom";
-import { login } from "./features/auth/authActions";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { logout } from "./features/auth/authSlice";
-import { Navbar } from "./components/navbar";
+import { Outlet } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+
+import { logout } from "./features/Auth/authSlice";
+import { login } from "./features/Auth/authActions";
+
+import { Navbar } from "./components/navbar";
 import { Footer } from "./components/footer";
 
-const AppContainer = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
-
-  /* margin-left: 5vw;  
-   margin-right: 5vw; */
-`;
+const AppContainer = styled.div``;
 
 export default function App() {
   const dispatch = useDispatch();
-  const { loggedIn, loading } = useSelector((state) => state.auth);
+  const { loggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (!loggedIn && localStorage.getItem("refresh_token")) {
@@ -29,10 +24,10 @@ export default function App() {
   }, []);
 
   return (
-      <AppContainer>
-        <Navbar></Navbar>
-        <Outlet />
-        <Footer/>
-      </AppContainer>
+    <AppContainer>
+      <Navbar></Navbar>
+      <Outlet />
+      <Footer />
+    </AppContainer>
   );
 }

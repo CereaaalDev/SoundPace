@@ -1,13 +1,10 @@
 import axios from "axios";
 import * as Utils from "../util/HelperFunctions";
 
-const BASE_AUTH_URL = "https://accounts.spotify.com";
-const CLIENT_ID = "9e015ecfbd974c18a74316be13330671";
-const REDIRECT_URL = "http://localhost:5173/logincallback";
 const SCOPE = 'user-library-read user-top-read playlist-read-private playlist-modify-public playlist-modify-private ugc-image-upload'; //user-read-private
 
 const authAPI = axios.create({
-  baseURL: BASE_AUTH_URL,
+  baseURL: import.meta.env.VITE_BASE_AUTH_URL,
   headers: {
     "Content-Type": "application/x-www-form-urlencoded",
   },
@@ -22,7 +19,7 @@ export const getLoginUrl = () => {
   const code_challenge = Utils.getEncodedVerifier(code_verifier);
 
   //create URL
-  const url = `${BASE_AUTH_URL}/authorize?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URL}&code_challenge_method=S256&code_challenge=${code_challenge}&scope=${SCOPE}`;
+  const url = `${import.meta.env.VITE_BASE_AUTH_URL}/authorize?client_id=${import.meta.env.VITE_CLIENT_ID}&response_type=code&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}&code_challenge_method=S256&code_challenge=${code_challenge}&scope=${SCOPE}`;
   return url;
 };
 
@@ -38,14 +35,13 @@ export const getAuthToken = async (code) => {
       params: {
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: REDIRECT_URL,
-        client_id: CLIENT_ID,
+        redirect_uri: import.meta.env.VITE_REDIRECT_URL,
+        client_id: import.meta.env.VITE_CLIENT_ID,
         scope: SCOPE,
         code_verifier: code_verifier,
       },
     });
 
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("refresh_token", response.data.refresh_token);
@@ -86,7 +82,7 @@ export const refreshAuthToken = async () => {
             params: {
               grant_type: "refresh_token",
               refresh_token: refresh_token,
-              client_id: CLIENT_ID,
+              client_id: import.meta.env.VITE_CLIENT_ID,
             }
         })
         

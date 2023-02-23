@@ -1,8 +1,7 @@
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { PlaylistChoice } from "./PlaylistChoice";
 import { Settings } from "./Settings";
-import { Stepper } from "../../components/stepper";
-import { useSelector } from "react-redux";
 import { CreatePlaylist } from "./CreatePlaylist";
 
 const HeaderSection = styled.section`

@@ -2,20 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import store from "./store";
+import { Provider } from "react-redux";
 
 import App from "./App";
-import NotFound from "./features/Errors/NotFound";
-import AfterLogin from "./features/auth/Callback";
-import LoginError from "./features/Errors/LoginError";
-import Dashboard from "./features/Dashboard/index";
 import Home from "./features/Home";
-import { Provider } from "react-redux";
+import Dashboard from "./features/Dashboard/index";
+import NotFound from "./components/errors/NotFound";
+import AccountError from "./components/errors/AccountError";
+import Callback from "./features/Auth/Callback";
+import { PaceCreator } from "./features/PaceCreator";
 import ProtectedRoute from "./util/ProtectedRoute";
-import Callback from "./features/auth/Callback";
+
 import GlobalCSS from "./util/global.css";
 import "./css_reset.css";
-import Login from "./features/auth/Login";
-import { PaceCreator } from "./features/PaceCreator";
 
 const router = createBrowserRouter([
   {
@@ -26,12 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        children: [
-          {
-            path: "/login",
-            element: <Login />,
-          },
-        ],
+      },
+      {
+        path: "/account-signup",
+        element: <AccountError />,
       },
       {
         path: "/dashboard",
@@ -40,7 +37,7 @@ const router = createBrowserRouter([
       {
         path: "/pacecreator",
         element: <ProtectedRoute element={<PaceCreator />} />,
-      }
+      },
     ],
   },
   {

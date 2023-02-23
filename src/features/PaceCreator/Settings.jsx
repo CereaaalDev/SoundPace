@@ -1,19 +1,19 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import styled from "styled-components";
+import { COLORS } from "../../util/Colors";
+import Slider from "@mui/material/Slider";
+
+import { ListItem } from "../../components/listitem";
+import { CustomButton } from "../../components/button";
+import { Spinner } from "../../components/spinner";
+
 import {
   getTracksOfSelectedPlaylists,
   getAnalyticsOfSelectedTracks,
 } from "./paceCreatorActions";
 
-import { Spinner } from "../../components/spinner";
-
-import Slider from "@mui/material/Slider";
-import { COLORS } from "../../util/Colors";
-
-import styled from "styled-components";
-import { ListItem } from "../../components/listitem";
-import { CustomButton } from "../../components/button";
 import {
   addFilteredTracks,
   nextStep,
@@ -189,9 +189,7 @@ export function Settings() {
             <FilterBox>
               <FilterLabelContainer>
                 <h3>Energylevel</h3>
-                <span>
-                  min. {energyFilter} %
-                </span>
+                <span>min. {energyFilter} %</span>
               </FilterLabelContainer>
               <Slider
                 onChange={(e, value) => setEnergyFilter(value)}
@@ -209,9 +207,7 @@ export function Settings() {
             <FilterBox>
               <FilterLabelContainer>
                 <h3>Tanzbarkeit</h3>
-                <span>
-                  min. {danceFilter} %
-                </span>
+                <span>min. {danceFilter} %</span>
               </FilterLabelContainer>
               <Slider
                 onChange={(e, value) => setDanceFilter(value)}

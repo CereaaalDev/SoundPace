@@ -44,7 +44,7 @@ export function InfoCards() {
           <FeautureCard
             icon="src/assets/icons/lupe.svg"
             title="Entdecke neue Kobinationen"
-            description="Lass deine Songs analyiseren und entdecke neue Eigenschaften deiner Lieblingsongs"
+            description="Filtere und kombiniere deine Songs nach Geschwindigkeit, Tanzbarkeit und vielem mehr."
           />
           <FeautureCard
             icon="src/assets/icons/new.svg"

@@ -1,13 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { contentAPI } from "../../api/content";
-import axios from "axios";
 import { B64_COVER } from "../../assets/cover_b64_plain.js";
 import { imageAPI } from "../../api/image";
 
-
 export const getPlaylists = createAsyncThunk(
   "paceCreator/getPlaylists",
-  async (_, {rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       let response = null;
       let result = [];
@@ -16,11 +14,10 @@ export const getPlaylists = createAsyncThunk(
       result = result.concat(response.data.items);
 
       while (response.data.next) {
-          response = await contentAPI.get(response.data.next);
-          result = result.concat(response.data.items);
+        response = await contentAPI.get(response.data.next);
+        result = result.concat(response.data.items);
       }
       return result;
-
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);
@@ -128,9 +125,10 @@ export const changePlaylistCover = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       //Timeout damit Playlist wirklich angelegt ist bei Spotify
-      const sleep = (milliseconds) => new Promise(resolve => setTimeout(resolve, milliseconds))
+      const sleep = (milliseconds) =>
+        new Promise((resolve) => setTimeout(resolve, milliseconds));
       await sleep(2000);
-      await imageAPI.put(`/playlists/${id}/images`,B64_COVER);
+      await imageAPI.put(`/playlists/${id}/images`, B64_COVER);
     } catch (error) {
       console.log(error);
       return rejectWithValue(error.data);

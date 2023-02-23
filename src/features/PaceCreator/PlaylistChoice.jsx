@@ -1,14 +1,19 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { PlaylistCard } from "../../components/playlistcard";
-import { getPlaylists } from "./paceCreatorActions";
-import { deselectAllPlaylists, nextStep, previousStep, resetSuccess, selectAllPlaylists, selectPlaylist } from "./paceCreatorSlice";
 import { Spinner } from "../../components/spinner";
-import { useEffect, useState } from "react";
 import { CustomButton } from "../../components/button";
-
-import { BiSelectMultiple, BiRefresh, BiTrash } from 'react-icons/bi';
 import { IconButton } from "../../components/iconbutton";
+import { BiSelectMultiple, BiRefresh, BiTrash } from "react-icons/bi";
+
+import { getPlaylists } from "./paceCreatorActions";
+import {
+  deselectAllPlaylists,
+  nextStep,
+  selectAllPlaylists,
+  selectPlaylist,
+} from "./paceCreatorSlice";
 
 const PlaylistCardContainer = styled.div`
   display: grid;
@@ -17,7 +22,7 @@ const PlaylistCardContainer = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(170px, max-content));
   justify-content: center;
   max-height: 70vh;
-  overflow-Y: auto;
+  overflow-y: auto;
   overflow-x: hidden;
   margin-top: 4rem;
 `;
@@ -53,7 +58,7 @@ const ControlsContainer = styled.div`
   justify-content: flex-end;
   margin-top: 3rem;
   flex-wrap: wrap;
-`
+`;
 
 export function PlaylistChoice() {
   const { loading, userPlaylists } = useSelector((state) => state.paceCreator);
@@ -93,18 +98,34 @@ export function PlaylistChoice() {
       </SelectionContainer>
 
       <ButtonContainer>
-        <CustomButton disabled={totalSelected === 0} onClick={() => dispatch(nextStep())}>
+        <CustomButton
+          disabled={totalSelected === 0}
+          onClick={() => dispatch(nextStep())}
+        >
           Nächster Schritt
         </CustomButton>
       </ButtonContainer>
 
-
       <ControlsContainer>
-        <IconButton icon={<BiRefresh/>} onClick={()=>dispatch(getPlaylists())}>Aktualisieren</IconButton>
-        <IconButton icon={<BiSelectMultiple/>} onClick={()=>dispatch(selectAllPlaylists())} >Alle auswählen</IconButton>
-        <IconButton icon={<BiTrash/>} onClick={()=>dispatch(deselectAllPlaylists())}>Auswahl aufheben</IconButton>
+        <IconButton
+          icon={<BiRefresh />}
+          onClick={() => dispatch(getPlaylists())}
+        >
+          Aktualisieren
+        </IconButton>
+        <IconButton
+          icon={<BiSelectMultiple />}
+          onClick={() => dispatch(selectAllPlaylists())}
+        >
+          Alle auswählen
+        </IconButton>
+        <IconButton
+          icon={<BiTrash />}
+          onClick={() => dispatch(deselectAllPlaylists())}
+        >
+          Auswahl aufheben
+        </IconButton>
       </ControlsContainer>
-
 
       <PlaylistCardContainer>
         {userPlaylists && !loading ? (

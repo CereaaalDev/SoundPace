@@ -38,6 +38,8 @@ const authSlice = createSlice({
       state.loggedIn = true;
     },
     [login.rejected]: (state, action) => {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token')
       state.error = action.error.message;
       state.loading = false;
       state.loggedIn = false;

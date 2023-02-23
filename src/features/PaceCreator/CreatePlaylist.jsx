@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { CustomButton } from "../../components/button";
-import { previousStep, removeFilteredTrack, restart } from "./paceCreatorSlice";
-import { ListItem } from "../../components/listitem";
 import { COLORS } from "../../util/Colors";
-import { createPlaylist } from "./paceCreatorActions";
-import { useState } from "react";
+
+import { ListItem } from "../../components/listitem";
 import { Spinner } from "../../components/spinner";
+import { CustomButton } from "../../components/button";
+
+import { createPlaylist } from "./paceCreatorActions";
+import { previousStep, removeFilteredTrack, restart } from "./paceCreatorSlice";
 
 const InstructionContainer = styled.div`
   padding: 2rem 0;
@@ -153,7 +155,7 @@ export function CreatePlaylist() {
                 index={index + 1}
                 imgSrc={track.track.album.images[0].url}
                 removable={true}
-                onClick={()=>dispatch(removeFilteredTrack(track.track.id))}
+                onClick={() => dispatch(removeFilteredTrack(track.track.id))}
               />
             ))
           : null}

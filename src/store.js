@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authReducer from './features/auth/authSlice'
+import authReducer from './features/Auth/authSlice'
 import userTopReducer from './features/Dashboard/userTopSlice'
 import paceCreatorReducer from './features/PaceCreator/paceCreatorSlice'
 
