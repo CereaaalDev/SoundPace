@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors";
 
 const Button = styled.button`
   text-align: center;

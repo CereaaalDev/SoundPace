@@ -2,13 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
-import { CustomButton } from "../../components/button";
-import { LoadingOverlay } from "../../components/loadingoverlay";
-import BackgroundShape from "../../assets/soundwaves.svg"
+import { COLORS } from "/src/util/Colors";
+import { CustomButton } from "/src/components/button";
+import { LoadingOverlay } from "/src/components/loadingoverlay";
+import BackgroundShape from "/src/assets/soundwaves.svg"
 
 import { login } from "../Auth/authActions";
-import { getLoginUrl } from "../../api/auth";
+import { getLoginUrl } from "/src/api/auth";
 
 const SectionContainer = styled.div`
   display: flex;

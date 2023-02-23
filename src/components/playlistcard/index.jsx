@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const CardContainer = styled.div`

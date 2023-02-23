@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
-import { Avatar } from "../../components/avatar";
-import { Statcard } from "../../components/statcard";
-import { COLORS } from "../../util/Colors";
+import { Avatar } from "/src/components/avatar";
+import { Statcard } from "/src/components/statcard";
+import { COLORS } from "/src/util/Colors.js";
 import { GiMustache } from "react-icons/gi";
-import { ListItem } from "../../components/listitem";
-import { Spinner } from "../../components/spinner";
+import { ListItem } from "/src/components/listitem";
+import { Spinner } from "/src/components/spinner";
+
+src/components/spinner
 
 import { getTracks, getTrackAnalytics, calculateStats } from "./userTopActions";
 

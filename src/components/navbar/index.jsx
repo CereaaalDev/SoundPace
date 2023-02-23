@@ -1,8 +1,7 @@
 import styled from "styled-components";
-import { Logo } from "../logo";
+import { Logo } from "/src/components/logo";
 import { NavItems } from "./navItems";
-import { FaBars } from "react-icons/fa";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors.js";
 
 const NavbarContainer = styled.div`
   min-height: 70px;

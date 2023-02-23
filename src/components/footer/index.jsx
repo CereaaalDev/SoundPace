@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
-import TiltShape from "../../assets/icons/tilt.svg"
+import { COLORS } from "/src/util/Colors.js";
+import TiltShape from "/src/assets/icons/tilt.svg"
 
 
 const SectionContainer = styled.div`

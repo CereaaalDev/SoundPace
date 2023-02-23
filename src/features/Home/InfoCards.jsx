@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { FeautureCard } from "../../components/feautureCard";
-import { COLORS } from "../../util/Colors";
-import AnalyzeIcon from "../../assets/icons/analyze.svg"
-import TiltShape from "../../assets/icons/tilt.svg"
-import LupeIcon from "../../assets/icons/lupe.svg"
-import NewIcon from "../../assets/icons/new.svg"
+import { FeautureCard } from "/src/components/feautureCard";
+import { COLORS } from "/src/util/Colors";
+import AnalyzeIcon from "/src/assets/icons/analyze.svg"
+import TiltShape from "/src/assets/icons/tilt.svg"
+import LupeIcon from "/src/assets/icons/lupe.svg"
+import NewIcon from "/src/assets/icons/new.svg"
 
 const SectionContainer = styled.div`
   width: 100vw;

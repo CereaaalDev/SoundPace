@@ -1,7 +1,6 @@
 import { useNavigate, useRouteError } from "react-router-dom";
 import styled from "styled-components";
-import { CustomButton } from "../../components/button";
-import { Logo } from "../../components/logo";
+import { CustomButton } from "/src/components/button";
 
 const ErrorContainer = styled.div`
   display: flex;

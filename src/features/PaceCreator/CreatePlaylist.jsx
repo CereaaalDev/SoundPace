@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors";
 
-import { ListItem } from "../../components/listitem";
-import { Spinner } from "../../components/spinner";
-import { CustomButton } from "../../components/button";
+import { ListItem } from "/src/components/listitem";
+import { Spinner } from "/src/components/spinner";
+import { CustomButton } from "/src/components/button";
 
 import { createPlaylist } from "./paceCreatorActions";
 import { previousStep, removeFilteredTrack, restart } from "./paceCreatorSlice";

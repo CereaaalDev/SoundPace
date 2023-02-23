@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { PlaylistCard } from "../../components/playlistcard";
-import { Spinner } from "../../components/spinner";
-import { CustomButton } from "../../components/button";
-import { IconButton } from "../../components/iconbutton";
+import { PlaylistCard } from "/src/components/playlistcard";
+import { Spinner } from "/src/components/spinner";
+import { CustomButton } from "/src/components/button";
+import { IconButton } from "/src/components/iconbutton";
 import { BiSelectMultiple, BiRefresh, BiTrash } from "react-icons/bi";
 
 import { getPlaylists } from "./paceCreatorActions";

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { contentAPI } from "../../api/content";
-import { B64_COVER } from "../../assets/cover_b64_plain.js";
-import { imageAPI } from "../../api/image";
+import { contentAPI } from "/src/api/content";
+import { B64_COVER } from "/src/assets/cover_b64_plain.js";
+import { imageAPI } from "/src/api/image";
 
 export const getPlaylists = createAsyncThunk(
   "paceCreator/getPlaylists",

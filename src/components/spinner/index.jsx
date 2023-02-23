@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors";
 
 const spin = keyframes`
     from {

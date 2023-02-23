@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
-import { FONTSIZE } from "../../util/FontSizes";
+import { COLORS } from "/src/util/Colors";
 
 const StatCardContainer = styled.div`
   background-color: ${COLORS["bg-white"]};

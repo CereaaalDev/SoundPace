@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { COLORS } from "../../util/Colors";
+import { COLORS } from "/src/util/Colors";
 import { FaBars } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { useState } from "react";
 import { CustomButton } from "../button";
-import { logout } from "../../features/Auth/authSlice";
+import { logout } from "/src/features/Auth/authSlice";
 import { useDispatch } from "react-redux";
 
 const ListContainer = styled.ul`

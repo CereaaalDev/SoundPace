@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { contentAPI } from "../../api/content";
-import * as UTILS from "../../util/HelperFunctions";
+import { contentAPI } from "/src/api/content";
+import * as UTILS from "/src/util/HelperFunctions";
 
 export const getTracks = createAsyncThunk(
   "userTop/getTracks",
