@@ -1,4 +1,4 @@
-import SoundPaceLogo from "/src/assets/SoundPace_logo.svg";
+import SoundPaceLogo from "/SoundPace_logo.svg";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 
