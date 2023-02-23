@@ -1,10 +1,9 @@
 import axios from "axios";
 import { refreshAuthToken } from "./auth";
 
-const BASE_CONTENT_URL = 'https://api.spotify.com/v1';
 
 export const contentAPI = axios.create({
-    baseURL: BASE_CONTENT_URL,
+    baseURL: import.meta.env.VITE_BASE_CONTENT_URL,
     headers: {
         "Content-Type": "application/json",
       }
