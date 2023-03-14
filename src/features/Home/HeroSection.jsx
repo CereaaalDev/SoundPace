@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { COLORS } from "/src/util/Colors";
 import { CustomButton } from "/src/components/button";
 import { LoadingOverlay } from "/src/components/loadingoverlay";
-import BackgroundShape from "/src/assets/soundwaves.svg"
+import BackgroundShape from "/src/assets/soundwaves.svg";
 
 import { login } from "../Auth/authActions";
 import { getLoginUrl } from "/src/api/auth";
@@ -63,29 +63,32 @@ export default function HeroSection() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, loggedIn } = useSelector((state) => state.auth);
-  const [logininProgress, setLoginInProgress] = useState(false);
+  const [loginInProgress, setLoginInProgress] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-
-  let popupWindow;
-  let popupClosedInterval;
+  let popupWindow = useRef();
+  let popupClosedInterval = useRef();
 
   const openLoginPopup = () => {
     setLoginInProgress(true);
+
+    //Position des PopUps auf dem Bildschirm
     const top = window.outerHeight / 2 + window.screenY - 600 / 2;
     const left = window.outerWidth / 2 + window.screenX - 700 / 2;
-    popupWindow = window.open(
+    popupWindow.current = window.open(
       getLoginUrl(),
       "Spotify Login",
       `height=600,width=700,top=${top},left=${left}`
     );
+
+    //Abfangen von Callback von Popup und prüfen ob Popup vor Abschluss der Authentifizierung geschlossen wurde.
     window.addEventListener("message", handleWindowMessage);
-    //todo: hier noch prüfen ob Popup geschlossen wurde
-    popupClosedInterval = setInterval(() => {
+    popupClosedInterval.current = setInterval(() => {
       const popupClosed =
-        !popupWindow || !popupWindow.window || popupWindow.window.closed;
+        !popupWindow.current ||
+        !popupWindow.current.window ||
+        popupWindow.current.window.closed;
       if (popupClosed) {
-        // Popup wurde vor Abschluss der Authentifizierung geschlossen.
-        clearInterval(popupClosedInterval);
+        clearInterval(popupClosedInterval.current);
         localStorage.removeItem("code_verifier");
         window.removeEventListener("message", handleWindowMessage);
         setLoginInProgress(false);
@@ -95,29 +98,31 @@ export default function HeroSection() {
 
   const handleWindowMessage = async (message) => {
     try {
+      //Abfangen von Messages von Popup
       if (message.data.type === "callbackmessage") {
         if (message.data.payload.error) {
           throw new Error("Es kam kein Auth-Code von Spotify zurück");
         }
+        popupWindow.current.close();
 
-        popupWindow.close();
-        //code aus URL and Login-Action weitergeben
+        //Auth-Code von Spotify aus URL an Login-Action weitergeben
         dispatch(login(message.data.payload.code))
           .unwrap()
           .then(() => {
             navigate("/dashboard");
             window.removeEventListener("message", handleWindowMessage);
           })
-          .catch((err) => {
+          .catch(() => {
             navigate("/account-signup");
             window.removeEventListener("message", handleWindowMessage);
           });
       }
     } catch (error) {
       console.error(error);
-      //TODO: dispatch of error State to update UI
+
+      //Reset falls Fehler aufgetreten ist
       window.removeEventListener("message", handleWindowMessage);
-      popupWindow.close();
+      popupWindow.current.close();
       localStorage.removeItem("code_verifier");
       setLoginInProgress(false);
     }
@@ -157,7 +162,7 @@ export default function HeroSection() {
                     Damit du die Webseite mit deinem eigenen Spotify-Account
                     verwenden kannst, muss dieser zuerst freigegeben werden.
                     Kontaktiere mich und teil mir die Email-Adresse deines
-                    Spotify-Accounts mit, damit ich dich freischalten kan. Dies
+                    Spotify-Accounts mit, damit ich dich freischalten kann. Dies
                     ist nicht mehr nötig sobald das Review durch Spotify
                     abgeschlossen ist.{" "}
                   </p>
@@ -168,7 +173,7 @@ export default function HeroSection() {
         </ButtonGroup>
         <BackgroundImage src={BackgroundShape} alt="" />
       </LeftContainer>
-      {logininProgress ? <LoadingOverlay /> : null}
+      {loginInProgress ? <LoadingOverlay /> : null}
     </SectionContainer>
   );
 }
