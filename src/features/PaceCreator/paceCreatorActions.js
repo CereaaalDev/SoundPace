@@ -88,7 +88,7 @@ export const createPlaylist = createAsyncThunk(
         {
           name: playlistName,
           description:
-            "Playlist wurde mit SoundPace erstellt. Mehr Infos unter www.mysoundpace.com",
+            "Playlist wurde mit SoundPace erstellt. Mehr Infos unter mysoundpace.com",
           public: false,
         }
       );

@@ -33,6 +33,7 @@ Im ersten Schritt muss die Quelle der eigenen Musik gewählt werden. Es können 
   <img width="300" alt="image" src="https://user-images.githubusercontent.com/97185101/227190201-6fd2ae08-4b2a-4f72-b1d6-aee1cf3dd79d.png">
 </p>
 
+Im nächsten Schritt wird die ausgewählte Musik analysiert und weitere Daten bei Spotify abgefragt. Danach können verschiedene Parameter-Einstellungen vorgenommen werden um eine neue Liste mit Tracks zu erhalten, die den Kriterien entsprechen. Wähle z.B. Musik mit einem bestimmten Tempo (Pace), Energie oder Tanzbarkeit aus.
 
 ### Schritt 3
 
@@ -40,6 +41,9 @@ Im ersten Schritt muss die Quelle der eigenen Musik gewählt werden. Es können 
   <img width="300" alt="image" src="https://user-images.githubusercontent.com/97185101/227190500-bc203bf5-b9e4-462a-b5dd-a410b3102f79.png">
 </p>
 
+Im letzten Schritt kann die Playlist überprüft werden und allenfalls noch einzelne Tracks von der Liste entfernt werden. Sobald ein Namen für die Neue Playlist eingegeben wurde, kann nun die neue Playlist im Spotify-Account des Users angelegt werden.
+
 ## Verwendete Technologien
 
-|React | Redux | Axios |
+| React | Redux | Axios | Spotify-API |
+| ------------- | ------------- | ------------- | ------------- |
